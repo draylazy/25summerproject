@@ -1,0 +1,21 @@
+.logout-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 1em 1.5em;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  animation: fadeInOut 2s forwards;
+  z-index: 1000;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}

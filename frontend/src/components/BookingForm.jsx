@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './BookingForm.css';
 
 function BookingForm() {
+  useEffect(() => {
+    document.title = "Biyahero";
+  }, []);
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -11,18 +15,81 @@ function BookingForm() {
     to: '',
     date: '',
     busType: 'Non-Aircon',
-    passengers: '1 Passenger',
+    passengers: '1'
   });
+
+  const terminalDestinations = {
+    'CNBT (North Bus Terminal)': ['Catmon','Bogo', 'Daanbantayan', 'Danao', 'Liloan', 'Mandaue', 'Medellin'],
+    'CSBT (South Bus Terminal)': ['Carcar', 'Moalboal'],
+    'DBBT (Daanbantayan Bus Terminal)': ['Bogo', 'Liloan'],
+    'BBT (Bogo Bus Terminal)': ['Cebu', 'Daanbantayan', 'Liloan'],
+    'CBT (Carcar Bus Terminal)': ['Moalboal', 'Cebu City']
+  };
+
+  const priceMap = {
+    'CNBT (North Bus Terminal)': {
+      'Catmon': 180,
+      'Bogo': 200,
+      'Daanbantayan': 250,
+      'Danao': 150,
+      'Liloan': 120,
+      'Mandaue': 100,
+      'Medellin': 220
+    },
+    'CSBT (South Bus Terminal)': {
+      'Carcar': 180,
+      'Moalboal': 300
+    },
+    'DBBT (Daanbantayan Bus Terminal)': {
+      'Cebu': 250,
+      'Bogo': 100,
+      'Liloan': 120,
+    },
+    'BBT (Bogo Bus Terminal)': {
+      'Cebu': 200,
+      'Daanbantayan': 110,
+      'Liloan': 130,
+    },
+    'CBT (Carcar Bus Terminal)': {
+      'Moalboal': 210,
+      'Cebu City': 160
+    }
+  };
+
+  const [currentPrice, setCurrentPrice] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const updatedData = {
+      ...formData,
+      [name]: value
+    };
+
+    // Reset destination if terminal changes
+    if (name === 'from') {
+      updatedData.to = '';
+      setCurrentPrice(null);
+    }
+
+    // Update price when both terminal and destination are selected
+    if (
+      (name === 'to' || name === 'from') &&
+      (name === 'to' ? value : formData.to) &&
+      (name === 'from' ? value : formData.from)
+    ) {
+      const terminal = name === 'from' ? value : formData.from;
+      const destination = name === 'to' ? value : formData.to;
+      const price = priceMap[terminal]?.[destination] || null;
+      setCurrentPrice(price);
+    }
+
+    setFormData(updatedData);
   };
 
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const passengersNumber = parseInt(formData.passengers); // converts "1 Passenger" to 1
+  const passengersNumber = parseInt(formData.passengers);
 
   const payload = {
     terminal: formData.from,
@@ -30,11 +97,18 @@ function BookingForm() {
     date: formData.date,
     busType: formData.busType,
     passengerCount: passengersNumber,
+    pricePerPassenger: currentPrice
   };
 
   try {
     await axios.post('http://localhost:8080/api/bookings/create', payload);
-    navigate('/payment', { state: formData });
+    // ✅ include pricePerPassenger when navigating
+    navigate('/payment', {
+      state: {
+        ...formData,
+        pricePerPassenger: currentPrice
+      }
+    });
   } catch (error) {
     console.error("Failed to send booking:", error);
     alert("Error submitting booking. Please try again.");
@@ -48,28 +122,43 @@ function BookingForm() {
         <form className="booking-form" onSubmit={handleSubmit}>
           <div>
             <label>From</label>
-            <select name="from" value={formData.from} onChange={handleChange} required>
+            <select
+              name="from"
+              value={formData.from}
+              onChange={handleChange}
+              required
+            >
               <option value="" disabled>Select departure</option>
-              <option value="CNBT (North Bus Terminal)">Cebu North Bus Terminal</option>
-              <option value="CSBT (South Bus Terminal)">Cebu South Bus Terminal</option>
-              <option value="DBBT (Daanbantayan Bus Terminal)">Daanbantayan Bus Terminal</option>
-              <option value="BBT (Bogo Bus Terminal)">Bogo Bus Terminal</option>
-              <option value="CBT (Carcar Bus Terminal)">Carcar Bus Terminal</option>
+              {Object.keys(terminalDestinations).map((terminal) => (
+                <option key={terminal} value={terminal}>
+                  {terminal}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
             <label>To</label>
-            <select name="to" value={formData.to} onChange={handleChange} required>
-              <option value="" disabled>Select destination</option>
-              <option value="Cebu City">Cebu City</option>
-              <option value="Daanbantayan">Daanbantayan</option>
-              <option value="Liloan">Liloan</option>
-              <option value="Carcar">Carcar</option>
-              <option value="Moalboal">Moalboal</option>
+            <select
+              name="to"
+              value={formData.to}
+              onChange={handleChange}
+              required
+              disabled={!formData.from}
+            >
+              <option value="" disabled>
+                {formData.from
+                  ? "Select destination"
+                  : "Select terminal first"}
+              </option>
+              {formData.from &&
+                terminalDestinations[formData.from].map((dest) => (
+                  <option key={dest} value={dest}>
+                    {dest}
+                  </option>
+                ))}
             </select>
           </div>
-
           <div>
             <label>Date of trip</label>
             <input
@@ -83,7 +172,11 @@ function BookingForm() {
 
           <div>
             <label>Bus Type (AC/NAC)</label>
-            <select name="busType" value={formData.busType} onChange={handleChange}>
+            <select
+              name="busType"
+              value={formData.busType}
+              onChange={handleChange}
+            >
               <option value="Non-Aircon">Non-Aircon</option>
               <option value="Aircon">Aircon</option>
             </select>
@@ -91,14 +184,21 @@ function BookingForm() {
 
           <div>
             <label>Passengers</label>
-            <select name="passengers" value={formData.passengers} onChange={handleChange}>
-              <option>1 Passenger</option>
-              <option>2 Passengers</option>
-              <option>3 Passengers</option>
-              <option>4 Passengers</option>
-              <option>5 Passengers</option>
-            </select>
+            <input
+              type="number"
+              name="passengers"
+              value={formData.passengers}
+              onChange={handleChange}
+              min="1"
+              required
+            />
           </div>
+
+          {currentPrice && (
+            <div className="price-info">
+              <strong>Price per passenger: ₱{currentPrice}</strong>
+            </div>
+          )}
 
           <div className="full-width">
             <button type="submit">Continue Payment</button>

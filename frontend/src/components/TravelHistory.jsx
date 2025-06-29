@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './TravelHistory.css';
+import { Helmet } from 'react-helmet';
 
 function TravelHistory() {
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
+    document.title = "Biyahero | Travel History";
     fetchHistory();
   }, []);
 

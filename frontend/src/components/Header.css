@@ -86,3 +86,49 @@
   background-color: #2563eb;
   color: white;
 }
+
+
+/* Username container */
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+/* Username button styling */
+.username-button {
+  background: none;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  font-weight: 500;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  min-width: 120px;
+  z-index: 10;
+}
+
+/* Log out button */
+.logout-button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: black;
+  padding: 0.75em;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.logout-button:hover {
+  background: #7a0000;
+}

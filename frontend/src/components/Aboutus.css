@@ -1,121 +1,191 @@
-.testimonials-section {
-  background: white;
-  padding: 80px 0;
-}
- 
-.testimonials-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
- 
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
-}
- 
-.testimonial {
-  background: #dbeafe;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
- 
-.testimonial img {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 12px;
-}
- 
-.testimonial h4 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
- 
-.desc-image img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
- 
- 
-.about-grid-section {
-  padding: 60px 40px;
-  background: linear-gradient(to bottom right, #e0f7ff, #cce5ff);
-}
- 
-.about-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto auto;
-  gap: 40px;
-  align-items: center;
-}
- 
-.desc-text {
-  font-size: 16px;
-  line-height: 1.6;
-}
- 
-.desc-text h3 {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
- 
-.desc-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
- 
- 
-/* Motto Section */
-.motto-section {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url("src/images/busterminalbg.jpg") center/cover no-repeat;
-  color: white;
-  padding: 100px 20px;
-  text-align: center;
-}
- 
-@media (max-width: 600px) {
-  .motto-section h1 {
-    font-size: 1.4rem;
-    padding: 0 10px;
+/* Reset & General */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #222;
   }
-}
- 
- 
-/* Objectives Section */
-.objectives-section {
-  background-color: #f0f8ff;
-  padding: 40px 20px;
-  text-align: center;
-}
- 
-.objectives-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 30px;
-}
- 
-.objectives-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
- 
-.objective {
-  background-color: #dbeafe;
-  padding: 20px;
-  border-radius: 10px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
+  
+  /* Motto Section */
+  .motto-section {
+    background: linear-gradient(rgba(98, 97, 97, 0.55), rgba(28, 60, 105, 0.85)),
+                url("/images/busterminalbg.jpg") center center / cover no-repeat;
+    color: rgb(240, 242, 249);
+    padding: 120px 20px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .motto-section h1 {
+    font-family: 'Inter', sans-serif;
+    font-variant: small-caps;
+    font-size: 2.6rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    max-width: 900px;
+    margin: 0 auto;
+    text-shadow: 0 10px 10px rgba(0, 0, 0, 0.4);
+    animation: fadeInUp 1.2s ease-out;
+  }
+  
+  /* Text Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .motto-section h1 {
+      font-size: 1.6rem;
+      padding: 0 10px;
+    }
+  }
+  
+  /* Objectives Section */
+  .objectives-section {
+    background-color: #f0f8ff;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .objectives-section h2 {
+    font-size: 1.9rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-variant: small-caps;
+  }
+  
+  .objectives-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .objective {
+    background-color: #dbeafe;
+    padding: 20px;
+    border-radius: 12px;
+    font-family: 'Pacifico';
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #1e3a8a;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  }
+  
+  .objective:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
+  
+  
+  /* Meet the Team Section */
+  .testimonials-section {
+    background: white;
+    padding: 80px 0;
+  }
+  
+  .testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+  
+  .testimonial {
+    background: #dbeafe;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .testimonial:hover {
+    transform: translateY(-5px);
+  }
+  
+  .testimonial img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  /* About Grid Section */
+  .about-grid-section {
+    padding: 60px 40px;
+    background: linear-gradient(to bottom right, #e0f7ff, #cce5ff);
+  }
+  
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /*.about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    gap: 40px;
+    align-items: center;
+  }*/
+  
+  .desc-text {
+    font-size: 1.1rem; /* from 16px to around 17.6px */
+    line-height: 1.9;
+    font-weight: 400;
+    color: #111827; /* dark neutral for better contrast */
+    padding: 10px 20px;
+  }
+  
+  .desc-text h3 {
+    font-size: 1.8rem; /* from 24px to 28.8px */
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-variant: small-caps;
+    letter-spacing: 0.5px;
+    color: #1e3a8a;
+  }
+  
+  
+  .desc-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  

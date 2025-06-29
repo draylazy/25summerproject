@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
 
-function Header({ onLoginClick }) {
+function Header({ onLoginClick, username, onLogout }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="header">
       <div className="header-container">
@@ -16,7 +18,30 @@ function Header({ onLoginClick }) {
           <NavLink to="/travel-info" activeclassname="active">Travel Info</NavLink>
           <NavLink to="/about" activeclassname="active">About Us</NavLink>
         </nav>
-        <button className="login-button" onClick={onLoginClick}>Log In</button>
+
+        {username ? (
+          <div
+            className="user-menu"
+            onMouseEnter={() => setMenuOpen(true)}
+            onMouseLeave={() => setMenuOpen(false)}
+          >
+            <button className="username-button">
+               {username}
+            </button>
+            {menuOpen && (
+              <div className="dropdown">
+                <button
+                  className="logout-button"
+                  onClick={onLogout}
+                >
+                  Log Out
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button className="login-button" onClick={onLoginClick}>Log In</button>
+        )}
       </div>
     </header>
   );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './PaymentPage.css';
+import { Helmet } from 'react-helmet';
 
 function PaymentPage() {
   const location = useLocation();
@@ -13,51 +14,41 @@ function PaymentPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const getBaseFare = () => {
-    if (!data.from || !data.to) return 0;
+    if (!data.pricePerPassenger) return 0;
 
-    const destinationPricing = {
-      "Daanbantayan": 200,
-      "Moalboal": 180,
-      "Carcar": 150,
-      "Liloan": 120,
-      "Cebu City": 100,
-    };
-
-    let base = destinationPricing[data.to] || 100;
-    if (data.busType === "Aircon") {
-      base += 50;
-    }
-
-    const passengerCount = parseInt(data.passengers) || 1;
-    return base * passengerCount;
+    const passengerCount = parseInt(data.passengers || 1);
+    return data.pricePerPassenger * passengerCount;
   };
 
   const totalPrice = getBaseFare();
 
   const handlePaymentSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    await axios.post('http://localhost:8080/api/payments/create', {
-      bookingId: data.id,  // ✅ using 'id'
-      amount: totalPrice,
-      method: paymentMethod,
-      paymentDate: new Date().toISOString(),
-    });
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:8080/api/payments/create', {
+        bookingId: data.id,
+        amount: totalPrice,
+        method: paymentMethod,
+        paymentDate: new Date().toISOString(),
+      });
 
-    setShowSuccessModal(true);
-    setTimeout(() => {
-      setShowSuccessModal(false);
-      navigate('/');
-    }, 2000);
-  } catch (error) {
-    console.error("Payment failed:", error);
-    alert("Payment error. Try again.");
-  }
-};
-
+      setShowSuccessModal(true);
+      setTimeout(() => {
+        setShowSuccessModal(false);
+        navigate('/');
+      }, 2000);
+    } catch (error) {
+      console.error("Payment failed:", error);
+      alert("Payment error. Try again.");
+    }
+  };
 
   return (
     <div className="payment-wrapper">
+      <Helmet>
+        <title>Biyahero | Payment</title>
+      </Helmet>
+
       <div className="payment-box">
         <div className="summary-box">
           <h2>Booking Summary</h2>
@@ -82,8 +73,7 @@ function PaymentPage() {
 
           {showBreakdown && (
             <div className="price-breakdown">
-              <p>Base fare: ₱{(totalPrice / parseInt(data.passengers || 1)) - (data.busType === 'Aircon' ? 50 : 0)}</p>
-              {data.busType === "Aircon" && <p>+ ₱50 (Aircon Fee)</p>}
+              <p>Base fare per passenger: ₱{data.pricePerPassenger}</p>
               <p>Passengers: {data.passengers}</p>
               <hr />
               <strong>Total: ₱{totalPrice}</strong>

@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Aboutus.css';
- 
+ import { Helmet } from 'react-helmet';
+
 function AboutUs() {
+  useEffect(() => {
+  document.title = "Biyahero | About Us";
+    }, []);
   return (
+     <>
+      <Helmet>
+        <title>Biyahero | About Us</title>
+      </Helmet>
     <div className="aboutus-container">
  
       {/* Motto Section */}
@@ -59,10 +67,10 @@ function AboutUs() {
       </p>
     </div>
     <div className="desc-image">
-      <img src="src/images/busterminal3.webp" alt="Biyahero Terminal" />
+      <img src="/images/busterminal3.webp" alt="Biyahero Terminal" />
     </div>
     <div className="desc-image">
-      <img src="src/images/busterminal1.webp" alt="Biyahero Mission" />
+      <img src="/images/busterminal1.webp" alt="Biyahero Mission" />
     </div>
     <div className="desc-text">
       <p>
@@ -78,7 +86,9 @@ function AboutUs() {
  
  
     </div>
+    </>
   );
 }
  
 export default AboutUs;
+ 
