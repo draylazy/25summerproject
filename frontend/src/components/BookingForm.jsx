@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './BookingForm.css';
 
-function BookingForm() {
+function BookingForm({ requireLogin }) {
   useEffect(() => {
     document.title = "Biyahero";
   }, []);
@@ -65,13 +64,11 @@ function BookingForm() {
       [name]: value
     };
 
-    // Reset destination if terminal changes
     if (name === 'from') {
       updatedData.to = '';
       setCurrentPrice(null);
     }
 
-    // Determine if we should update the price
     const terminal = name === 'from' ? value : formData.from;
     const destination = name === 'to' ? value : formData.to;
     const busType = name === 'busType' ? value : formData.busType;
@@ -88,33 +85,22 @@ function BookingForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const passengersNumber = parseInt(formData.passengers);
+  const isLoggedIn = !!localStorage.getItem("biyaheroUsername");
+  if (!isLoggedIn) {
+    requireLogin();
+    return;
+  }
 
-    const payload = {
-      terminal: formData.from,
-      destination: formData.to,
-      date: formData.date,
-      busType: formData.busType,
-      passengerCount: passengersNumber,
+  navigate('/payment', {
+    state: {
+      ...formData,
       pricePerPassenger: currentPrice
-    };
-
-    try {
-      await axios.post('http://localhost:8080/api/bookings/create', payload);
-
-      navigate('/payment', {
-        state: {
-          ...formData,
-          pricePerPassenger: currentPrice
-        }
-      });
-    } catch (error) {
-      console.error("Failed to send booking:", error);
-      alert("Error submitting booking. Please try again.");
     }
-  };
+  });
+};
+
 
   return (
     <section className="booking-section" id="booking">
@@ -148,9 +134,7 @@ function BookingForm() {
               disabled={!formData.from}
             >
               <option value="" disabled>
-                {formData.from
-                  ? "Select destination"
-                  : "Select terminal first"}
+                {formData.from ? "Select destination" : "Select terminal first"}
               </option>
               {formData.from &&
                 terminalDestinations[formData.from].map((dest) => (

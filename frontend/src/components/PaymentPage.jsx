@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './PaymentPage.css';
@@ -12,8 +12,25 @@ function PaymentPage() {
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [showBreakdown, setShowBreakdown] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [nextBookingId, setNextBookingId] = useState(null); 
 
-  // Surcharge
+  
+  useEffect(() => {
+  const fetchLastBookingId = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/bookings/last-id');
+      const lastId = response.data.lastId || 0;   
+      setNextBookingId(lastId + 1);
+    } catch (error) {
+      console.error('Failed to fetch last booking ID:', error);
+      setNextBookingId('N/A');
+    }
+  };
+
+  fetchLastBookingId();
+}, []);
+
+
   const airconSurcharge = data.busType === 'Aircon' ? 50 : 0;
 
   const getBaseFare = () => {
@@ -26,9 +43,21 @@ function PaymentPage() {
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      const bookingResponse = await axios.post('http://localhost:8080/api/bookings/create', {
+        terminal: data.from,
+        destination: data.to,
+        date: data.date,
+        busType: data.busType,
+        passengerCount: parseInt(data.passengers),
+        pricePerPassenger: data.pricePerPassenger
+      });
+
+      const createdBookingId = bookingResponse.data.id;
+
       await axios.post('http://localhost:8080/api/payments/create', {
-        bookingId: data.id,
+        bookingId: createdBookingId,
         amount: totalPrice,
         method: paymentMethod,
         paymentDate: new Date().toISOString(),
@@ -55,7 +84,10 @@ function PaymentPage() {
         <div className="summary-box">
           <h2>Booking Summary</h2>
           <ul>
-            <li><strong>Booking Id:</strong> {data.bookingId}</li>
+            <li>
+              <strong>Booking Id:</strong>{' '}
+              {nextBookingId !== null ? nextBookingId : 'Loading...'}
+            </li>
             <li><strong>From:</strong> {data.from}</li>
             <li><strong>To:</strong> {data.to}</li>
             <li><strong>Date:</strong> {data.date}</li>
@@ -81,12 +113,8 @@ function PaymentPage() {
                   <p>Aircon surcharge per passenger: ₱50</p>
                   <p>Passengers: {data.passengers}</p>
                   <hr />
-                  <p>
-                    Total per passenger: ₱{data.pricePerPassenger}
-                  </p>
-                  <strong>
-                    Grand Total: ₱{totalPrice}
-                  </strong>
+                  <p>Total per passenger: ₱{data.pricePerPassenger}</p>
+                  <strong>Grand Total: ₱{totalPrice}</strong>
                 </>
               ) : (
                 <>

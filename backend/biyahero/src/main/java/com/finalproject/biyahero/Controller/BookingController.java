@@ -5,7 +5,9 @@ import com.finalproject.biyahero.Repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -18,27 +20,34 @@ public class BookingController {
     // Create new booking
     @PostMapping("/create")
     public BookingEntity createBooking(@RequestBody BookingEntity booking) {
-    return bookingRepository.save(booking);
+        return bookingRepository.save(booking);
     }
 
     // Get all bookings
     @GetMapping("/all")
     public List<BookingEntity> getAllBookings() {
-    return bookingRepository.findAll();
+        return bookingRepository.findAll();
     }
 
+    // ✅ Get the last booking ID as JSON { "lastId": 48 }
+    @GetMapping("/last-id")
+    public Map<String, Long> getLastBookingId() {
+        BookingEntity lastBooking = bookingRepository.findTopByOrderByIdDesc();
+        long id = lastBooking != null ? lastBooking.getId() : 0L;
+        return Collections.singletonMap("lastId", id);
+    }
 
-    // ✅ Update a booking by ID
+    // Update a booking by ID
     @PutMapping("/update/{id}")
-public BookingEntity updateBooking(@PathVariable Long id, @RequestBody BookingEntity updatedBooking) {
-    return bookingRepository.findById(id).map(booking -> {
-        booking.setTerminal(updatedBooking.getTerminal());
-        booking.setDestination(updatedBooking.getDestination());
-        booking.setDate(updatedBooking.getDate());
-        booking.setBusType(updatedBooking.getBusType());
-        booking.setPassengerCount(updatedBooking.getPassengerCount());
-        return bookingRepository.save(booking);
-    }).orElseThrow(() -> new RuntimeException("Booking not found with id " + id));
+    public BookingEntity updateBooking(@PathVariable Long id, @RequestBody BookingEntity updatedBooking) {
+        return bookingRepository.findById(id).map(booking -> {
+            booking.setTerminal(updatedBooking.getTerminal());
+            booking.setDestination(updatedBooking.getDestination());
+            booking.setDate(updatedBooking.getDate());
+            booking.setBusType(updatedBooking.getBusType());
+            booking.setPassengerCount(updatedBooking.getPassengerCount());
+            return bookingRepository.save(booking);
+        }).orElseThrow(() -> new RuntimeException("Booking not found with id " + id));
     }
 
     // Delete a booking by ID

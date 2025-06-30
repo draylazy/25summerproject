@@ -16,13 +16,12 @@ import LogoutPopup from './components/LogoutPopup';
 function AppContent() {
   const [loginOpen, setLoginOpen] = useState(false);
 
-  // Load username and role from localStorage on startup
-  const [loggedInUsername, setLoggedInUsername] = useState(() => {
-    return localStorage.getItem("biyaheroUsername");
-  });
-  const [loggedInRole, setLoggedInRole] = useState(() => {
-    return localStorage.getItem("biyaheroRole");
-  });
+  const [loggedInUsername, setLoggedInUsername] = useState(() =>
+    localStorage.getItem("biyaheroUsername")
+  );
+  const [loggedInRole, setLoggedInRole] = useState(() =>
+    localStorage.getItem("biyaheroRole")
+  );
 
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ function AppContent() {
       localStorage.removeItem("biyaheroUsername");
       localStorage.removeItem("biyaheroRole");
       setShowLogoutPopup(false);
-      navigate("/"); // Redirect to home page
+      navigate("/");
     }, 2000);
   };
 
@@ -56,7 +55,11 @@ function AppContent() {
           element={
             <>
               <Hero />
-              <BookingForm isAuthenticated={isAuthenticated} />
+              {/* Pass BOTH isAuthenticated and requireLogin */}
+              <BookingForm
+                isAuthenticated={isAuthenticated}
+                requireLogin={() => setLoginOpen(true)}
+              />
               <PromoSection />
             </>
           }

@@ -10,15 +10,8 @@ function ManageBookings() {
   }, []);
 
   const [bookings, setBookings] = useState([]);
-  const [editingId, setEditingId] = useState(null);
-  const [confirmDeleteId, setConfirmDeleteId] = useState(null); // NEW STATE for modal
-  const [editForm, setEditForm] = useState({
-    terminal: '',
-    destination: '',
-    date: '',
-    busType: '',
-    passengerCount: 1
-  });
+  const [editingBooking, setEditingBooking] = useState(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
   useEffect(() => {
     fetchBookings();
@@ -42,24 +35,18 @@ function ManageBookings() {
     }
   };
 
-  const handleEditClick = (booking) => {
-    setEditingId(booking.id);
-    setEditForm({ ...booking });
-  };
-
-  const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditForm((prev) => ({ ...prev, [name]: value }));
+  const handleEdit = (booking) => {
+    setEditingBooking(booking);
   };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/api/bookings/update/${editingId}`, {
-        ...editForm,
-        passengerCount: parseInt(editForm.passengerCount)
+      await axios.put(`http://localhost:8080/api/bookings/update/${editingBooking.id}`, {
+        ...editingBooking,
+        passengerCount: parseInt(editingBooking.passengerCount)
       });
-      setEditingId(null);
+      setEditingBooking(null);
       fetchBookings();
     } catch (error) {
       console.error('Error updating booking:', error);
@@ -67,123 +54,159 @@ function ManageBookings() {
   };
 
   return (
-    <>
+    <div className="manage-bookings-container">
       <Helmet>
-        <title>Biyahero | Manage Booking</title>
+        <title>Biyahero | Manage Bookings</title>
       </Helmet>
-      <div className="manage-bookings-container">
-        <h2>Manage Bookings</h2>
-        {bookings.length === 0 ? (
-          <p>No bookings found.</p>
-        ) : (
-          <>
-            <table>
-              <thead>
-                <tr>
-                  <th>Terminal</th>
-                  <th>Destination</th>
-                  <th>Date</th>
-                  <th>Bus Type</th>
-                  <th>Passengers</th>
-                  <th>Actions</th>
+      <h2>Manage Bookings</h2>
+      {bookings.length === 0 ? (
+        <p>No bookings found.</p>
+      ) : (
+        <>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Terminal</th>
+                <th>Destination</th>
+                <th>Date</th>
+                <th>Bus Type</th>
+                <th>Passengers</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map((booking) => (
+                <tr key={booking.id}>
+                  <td>{booking.id}</td>
+                  <td>{booking.terminal}</td>
+                  <td>{booking.destination}</td>
+                  <td>{booking.date}</td>
+                  <td>{booking.busType}</td>
+                  <td>{booking.passengerCount}</td>
+                  <td>
+                    <button className="edit-btn" onClick={() => handleEdit(booking)}>
+                      Edit
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => setConfirmDeleteId(booking.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {bookings.map((booking) => (
-                  <tr key={booking.id}>
-                    <td>{booking.terminal}</td>
-                    <td>{booking.destination}</td>
-                    <td>{booking.date}</td>
-                    <td>{booking.busType}</td>
-                    <td>{booking.passengerCount}</td>
-                    <td>
-                      <button
-                        className="delete-btn"
-                        onClick={() => setConfirmDeleteId(booking.id)}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="edit-btn"
-                        onClick={() => handleEditClick(booking)}
-                      >
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              ))}
+            </tbody>
+          </table>
 
-            {editingId && (
-              <form className="edit-form" onSubmit={handleEditSubmit}>
+          {editingBooking && (
+            <div className="edit-modal-overlay">
+              <div className="edit-modal">
                 <h3>Edit Booking</h3>
-                <label>
-                  Terminal:
-                  <input
-                    name="terminal"
-                    value={editForm.terminal}
-                    onChange={handleEditChange}
-                  />
-                </label>
-                <label>
-                  Destination:
-                  <input
-                    name="destination"
-                    value={editForm.destination}
-                    onChange={handleEditChange}
-                  />
-                </label>
-                <label>
-                  Date:
-                  <input
-                    type="date"
-                    name="date"
-                    value={editForm.date}
-                    onChange={handleEditChange}
-                  />
-                </label>
-                <label>
-                  Bus Type:
-                  <select
-                    name="busType"
-                    value={editForm.busType}
-                    onChange={handleEditChange}
-                  >
-                    <option value="Aircon">Aircon</option>
-                    <option value="Non-Aircon">Non-Aircon</option>
-                  </select>
-                </label>
-                <label>
-                  Passengers:
-                  <input
-                    type="number"
-                    name="passengerCount"
-                    value={editForm.passengerCount}
-                    onChange={handleEditChange}
-                    min="1"
-                  />
-                </label>
-                <button type="submit">Save</button>
-                <button type="button" onClick={() => setEditingId(null)}>
-                  Cancel
-                </button>
-              </form>
-            )}
+                <form onSubmit={handleEditSubmit}>
+                  <label>
+                    Booking ID:
+                    <input
+                      type="text"
+                      value={editingBooking.id}
+                      readOnly
+                    />
+                  </label>
+                  <label>
+                    Terminal:
+                    <input
+                      name="terminal"
+                      value={editingBooking.terminal}
+                      onChange={(e) =>
+                        setEditingBooking((prev) => ({
+                          ...prev,
+                          terminal: e.target.value
+                        }))
+                      }
+                    />
+                  </label>
+                  <label>
+                    Destination:
+                    <input
+                      name="destination"
+                      value={editingBooking.destination}
+                      onChange={(e) =>
+                        setEditingBooking((prev) => ({
+                          ...prev,
+                          destination: e.target.value
+                        }))
+                      }
+                    />
+                  </label>
+                  <label>
+                    Date:
+                    <input
+                      type="date"
+                      name="date"
+                      value={editingBooking.date}
+                      onChange={(e) =>
+                        setEditingBooking((prev) => ({
+                          ...prev,
+                          date: e.target.value
+                        }))
+                      }
+                    />
+                  </label>
+                  <label>
+                    Bus Type:
+                    <select
+                      name="busType"
+                      value={editingBooking.busType}
+                      onChange={(e) =>
+                        setEditingBooking((prev) => ({
+                          ...prev,
+                          busType: e.target.value
+                        }))
+                      }
+                    >
+                      <option value="Aircon">Aircon</option>
+                      <option value="Non-Aircon">Non-Aircon</option>
+                    </select>
+                  </label>
+                  <label>
+                    Passengers:
+                    <input
+                      type="number"
+                      name="passengerCount"
+                      value={editingBooking.passengerCount}
+                      onChange={(e) =>
+                        setEditingBooking((prev) => ({
+                          ...prev,
+                          passengerCount: e.target.value
+                        }))
+                      }
+                      min="1"
+                    />
+                  </label>
+                  <div className="edit-modal-buttons">
+                    <button type="submit">Save</button>
+                    <button type="button" onClick={() => setEditingBooking(null)}>
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
 
-            <ConfirmModal
-              open={confirmDeleteId !== null}
-              message="Are you sure you want to delete this booking?"
-              onConfirm={async () => {
-                await handleDelete(confirmDeleteId);
-                setConfirmDeleteId(null);
-              }}
-              onCancel={() => setConfirmDeleteId(null)}
-            />
-          </>
-        )}
-      </div>
-    </>
+          <ConfirmModal
+            open={confirmDeleteId !== null}
+            message="Are you sure you want to delete this booking?"
+            onConfirm={async () => {
+              await handleDelete(confirmDeleteId);
+              setConfirmDeleteId(null);
+            }}
+            onCancel={() => setConfirmDeleteId(null)}
+          />
+        </>
+      )}
+    </div>
   );
 }
 

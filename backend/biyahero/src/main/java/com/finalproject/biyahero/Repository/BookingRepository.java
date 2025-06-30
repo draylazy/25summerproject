@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
     // JpaRepository already provides basic CRUD operations:
     // save(), findById(), findAll(), deleteById(), etc.
+    BookingEntity findTopByOrderByIdDesc();
 }
