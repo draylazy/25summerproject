@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
 
-function Header({ onLoginClick, username, onLogout }) {
+function Header({ onLoginClick, username, role, onLogout }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -12,11 +12,28 @@ function Header({ onLoginClick, username, onLogout }) {
           <img src="src/images/biyahero-logo.png" alt="Biyahero Logo" />
           <span>Biyahero</span>
         </NavLink>
+
         <nav className="nav-links">
-          <NavLink to="/" end activeclassname="active">Book Ticket</NavLink>
-          <NavLink to="/manage-booking" activeclassname="active">Manage Booking</NavLink>
-          <NavLink to="/travel-info" activeclassname="active">Travel Info</NavLink>
-          <NavLink to="/about" activeclassname="active">About Us</NavLink>
+          <NavLink to="/" end activeclassname="active">
+            Book Ticket
+          </NavLink>
+
+          {role === "ADMIN" ? (
+            <NavLink to="/manage-booking" activeclassname="active">
+              Admin Dashboard
+            </NavLink>
+          ) : (
+            <NavLink to="/usermanage-booking" activeclassname="active">
+              Manage Booking
+            </NavLink>
+          )}
+
+          <NavLink to="/travel-info" activeclassname="active">
+            Travel Info
+          </NavLink>
+          <NavLink to="/about" activeclassname="active">
+            About Us
+          </NavLink>
         </nav>
 
         {username ? (
@@ -26,7 +43,7 @@ function Header({ onLoginClick, username, onLogout }) {
             onMouseLeave={() => setMenuOpen(false)}
           >
             <button className="username-button">
-               {username}
+              {username}
             </button>
             {menuOpen && (
               <div className="dropdown">
@@ -40,7 +57,9 @@ function Header({ onLoginClick, username, onLogout }) {
             )}
           </div>
         ) : (
-          <button className="login-button" onClick={onLoginClick}>Log In</button>
+          <button className="login-button" onClick={onLoginClick}>
+            Log In
+          </button>
         )}
       </div>
     </header>

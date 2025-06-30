@@ -48,10 +48,12 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
           alert("✅ Account created! You can now log in.");
           setIsSignup(false);
         } else {
-          const data = await response.json(); // Get username from server response
-          if (onLoginSuccess && data.username) {
-            onLoginSuccess(data.username);
+          const data = await response.json();
+
+          if (onLoginSuccess && data.username && data.role) {
+            onLoginSuccess(data.username, data.role);
           }
+
           setShowSuccess(true);
           setTimeout(() => {
             setShowSuccess(false);

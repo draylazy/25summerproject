@@ -13,11 +13,13 @@ function PaymentPage() {
   const [showBreakdown, setShowBreakdown] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  // Surcharge
+  const airconSurcharge = data.busType === 'Aircon' ? 50 : 0;
+
   const getBaseFare = () => {
     if (!data.pricePerPassenger) return 0;
-
-    const passengerCount = parseInt(data.passengers || 1);
-    return data.pricePerPassenger * passengerCount;
+    const passengers = parseInt(data.passengers || 1);
+    return data.pricePerPassenger * passengers;
   };
 
   const totalPrice = getBaseFare();
@@ -38,8 +40,8 @@ function PaymentPage() {
         navigate('/');
       }, 2000);
     } catch (error) {
-      console.error("Payment failed:", error);
-      alert("Payment error. Try again.");
+      console.error('Payment failed:', error);
+      alert('Payment error. Try again.');
     }
   };
 
@@ -73,10 +75,27 @@ function PaymentPage() {
 
           {showBreakdown && (
             <div className="price-breakdown">
-              <p>Base fare per passenger: ₱{data.pricePerPassenger}</p>
-              <p>Passengers: {data.passengers}</p>
-              <hr />
-              <strong>Total: ₱{totalPrice}</strong>
+              {data.busType === 'Aircon' ? (
+                <>
+                  <p>Base fare per passenger: ₱{data.pricePerPassenger - 50}</p>
+                  <p>Aircon surcharge per passenger: ₱50</p>
+                  <p>Passengers: {data.passengers}</p>
+                  <hr />
+                  <p>
+                    Total per passenger: ₱{data.pricePerPassenger}
+                  </p>
+                  <strong>
+                    Grand Total: ₱{totalPrice}
+                  </strong>
+                </>
+              ) : (
+                <>
+                  <p>Base fare per passenger: ₱{data.pricePerPassenger}</p>
+                  <p>Passengers: {data.passengers}</p>
+                  <hr />
+                  <strong>Total: ₱{totalPrice}</strong>
+                </>
+              )}
             </div>
           )}
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './BookingForm.css';
@@ -43,12 +43,12 @@ function BookingForm() {
     'DBBT (Daanbantayan Bus Terminal)': {
       'Cebu': 250,
       'Bogo': 100,
-      'Liloan': 120,
+      'Liloan': 120
     },
     'BBT (Bogo Bus Terminal)': {
       'Cebu': 200,
       'Daanbantayan': 110,
-      'Liloan': 130,
+      'Liloan': 130
     },
     'CBT (Carcar Bus Terminal)': {
       'Moalboal': 210,
@@ -71,49 +71,50 @@ function BookingForm() {
       setCurrentPrice(null);
     }
 
-    // Update price when both terminal and destination are selected
-    if (
-      (name === 'to' || name === 'from') &&
-      (name === 'to' ? value : formData.to) &&
-      (name === 'from' ? value : formData.from)
-    ) {
-      const terminal = name === 'from' ? value : formData.from;
-      const destination = name === 'to' ? value : formData.to;
-      const price = priceMap[terminal]?.[destination] || null;
-      setCurrentPrice(price);
+    // Determine if we should update the price
+    const terminal = name === 'from' ? value : formData.from;
+    const destination = name === 'to' ? value : formData.to;
+    const busType = name === 'busType' ? value : formData.busType;
+
+    if (terminal && destination) {
+      let basePrice = priceMap[terminal]?.[destination] || 0;
+      if (busType === 'Aircon') {
+        basePrice += 50;
+      }
+      setCurrentPrice(basePrice);
     }
 
     setFormData(updatedData);
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const passengersNumber = parseInt(formData.passengers);
+    const passengersNumber = parseInt(formData.passengers);
 
-  const payload = {
-    terminal: formData.from,
-    destination: formData.to,
-    date: formData.date,
-    busType: formData.busType,
-    passengerCount: passengersNumber,
-    pricePerPassenger: currentPrice
+    const payload = {
+      terminal: formData.from,
+      destination: formData.to,
+      date: formData.date,
+      busType: formData.busType,
+      passengerCount: passengersNumber,
+      pricePerPassenger: currentPrice
+    };
+
+    try {
+      await axios.post('http://localhost:8080/api/bookings/create', payload);
+
+      navigate('/payment', {
+        state: {
+          ...formData,
+          pricePerPassenger: currentPrice
+        }
+      });
+    } catch (error) {
+      console.error("Failed to send booking:", error);
+      alert("Error submitting booking. Please try again.");
+    }
   };
-
-  try {
-    await axios.post('http://localhost:8080/api/bookings/create', payload);
-    // ✅ include pricePerPassenger when navigating
-    navigate('/payment', {
-      state: {
-        ...formData,
-        pricePerPassenger: currentPrice
-      }
-    });
-  } catch (error) {
-    console.error("Failed to send booking:", error);
-    alert("Error submitting booking. Please try again.");
-  }
-};
 
   return (
     <section className="booking-section" id="booking">
@@ -159,6 +160,7 @@ function BookingForm() {
                 ))}
             </select>
           </div>
+
           <div>
             <label>Date of trip</label>
             <input
@@ -197,6 +199,11 @@ function BookingForm() {
           {currentPrice && (
             <div className="price-info">
               <strong>Price per passenger: ₱{currentPrice}</strong>
+              <br />
+              <span>
+                Total for {formData.passengers} passenger(s): ₱
+                {currentPrice * parseInt(formData.passengers)}
+              </span>
             </div>
           )}
 

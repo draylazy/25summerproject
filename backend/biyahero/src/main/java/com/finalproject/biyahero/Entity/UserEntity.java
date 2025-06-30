@@ -19,11 +19,21 @@ public class UserEntity {
     @Column(unique = true)
     private String username;
 
-
     @Column(unique = true)
     private String email;
 
     private String password;
+
+    private String role;
+
+    // ✅ Getters and setters for role
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     // Constructors
     public UserEntity() {}
@@ -33,7 +43,7 @@ public class UserEntity {
         this.password = password;
     }
 
-    // Getters and setters
+    // Getters and setters for other fields
     public Long getId() { return id; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -45,5 +55,4 @@ public class UserEntity {
     public void setLastName(String lastName) { this.lastName = lastName; }
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
-
 }

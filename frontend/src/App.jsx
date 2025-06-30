@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -13,12 +13,17 @@ import PromoSection from './components/Promos';
 import ManageBookings from './components/ManageBookings';
 import LogoutPopup from './components/LogoutPopup';
 
-// Move app logic here so we can use useNavigate
 function AppContent() {
   const [loginOpen, setLoginOpen] = useState(false);
+
+  // Load username and role from localStorage on startup
   const [loggedInUsername, setLoggedInUsername] = useState(() => {
     return localStorage.getItem("biyaheroUsername");
   });
+  const [loggedInRole, setLoggedInRole] = useState(() => {
+    return localStorage.getItem("biyaheroRole");
+  });
+
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const navigate = useNavigate();
 
@@ -26,45 +31,73 @@ function AppContent() {
     setShowLogoutPopup(true);
     setTimeout(() => {
       setLoggedInUsername(null);
+      setLoggedInRole(null);
       localStorage.removeItem("biyaheroUsername");
+      localStorage.removeItem("biyaheroRole");
       setShowLogoutPopup(false);
-      navigate("/"); // Redirect to Booking Form
+      navigate("/"); // Redirect to home page
     }, 2000);
   };
+
+  const isAuthenticated = !!loggedInUsername;
 
   return (
     <>
       <Header
         onLoginClick={() => setLoginOpen(true)}
         username={loggedInUsername}
+        role={loggedInRole}
         onLogout={handleLogout}
       />
 
       <Routes>
-        <Route path="/" element={
-          <>
-            <Hero />
-            <BookingForm />
-            <PromoSection />
-          </>
-        } />
-        <Route path="/manage-booking" element={<ManageBookings />} />
-        <Route path="/travel-info" element={<TravelHistory />} />
-        <Route path="/about" element={
-          <>
-            <About />
-            <Contact />
-          </>
-        } />
-        <Route path="/payment" element={<PaymentPage />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <BookingForm isAuthenticated={isAuthenticated} />
+              <PromoSection />
+            </>
+          }
+        />
+        <Route
+          path="/manage-booking"
+          element={
+            isAuthenticated ? <ManageBookings /> : <Navigate to="/" replace />
+          }
+        />
+        <Route
+          path="/travel-info"
+          element={
+            isAuthenticated ? <TravelHistory /> : <Navigate to="/" replace />
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            isAuthenticated ? <PaymentPage /> : <Navigate to="/" replace />
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <>
+              <About />
+              <Contact />
+            </>
+          }
+        />
       </Routes>
 
       <LoginModal
         open={loginOpen}
         onClose={() => setLoginOpen(false)}
-        onLoginSuccess={(username) => {
+        onLoginSuccess={(username, role) => {
           setLoggedInUsername(username);
+          setLoggedInRole(role);
           localStorage.setItem("biyaheroUsername", username);
+          localStorage.setItem("biyaheroRole", role);
         }}
       />
 
@@ -73,7 +106,6 @@ function AppContent() {
   );
 }
 
-// This stays simple
 function App() {
   return (
     <Router>

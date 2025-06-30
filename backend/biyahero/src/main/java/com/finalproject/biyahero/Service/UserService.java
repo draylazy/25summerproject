@@ -37,8 +37,10 @@ public class UserService {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setUsername(username);
+         user.setRole("USER");
 
         userRepository.save(user);
+        
         return true;
     }
 }
