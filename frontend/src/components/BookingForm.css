@@ -3,6 +3,10 @@
   padding: 60px 0;
 }
 
+.dark-mode .booking-section {
+  background: #1f2937; /* dark background */
+}
+
 .booking-container {
   max-width: 900px;
   margin: 0 auto;
@@ -19,10 +23,20 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.05);
 }
 
+.dark-mode .booking-form {
+  background: #374151; /* dark card */
+  box-shadow: 0 4px 16px rgba(255,255,255,0.05);
+}
+
 .booking-form label {
   font-weight: 600;
   display: block;
   margin-bottom: 8px;
+  color: #2563eb;
+}
+
+.dark-mode .booking-form label {
+  color: #93c5fd; /* lighter blue in dark mode */
 }
 
 .booking-form input,
@@ -34,6 +48,15 @@
   border-radius: 6px;
   font-size: 16px;
   box-sizing: border-box;
+  background: white;
+  color: black;
+}
+
+.dark-mode .booking-form input,
+.dark-mode .booking-form select {
+  background: #1f2937;
+  border: 1px solid #4b5563;
+  color: #f3f4f6;
 }
 
 .booking-form input[list] {
@@ -43,6 +66,13 @@
   font-size: 16px;
   width: 100%;
 }
+
+.dark-mode .booking-form input[list] {
+  background: #1f2937;
+  border: 1px solid #4b5563;
+  color: #f3f4f6;
+}
+
 .full-width {
   grid-column: span 2;
 }
@@ -58,16 +88,28 @@
   cursor: pointer; 
   transition: transform 0.2s ease;
 }
-.price-info{
-  margin-top: 40px;
-}
-button:hover {
+
+.full-width button:hover {
   background: green;
   transform: translateY(-5px);
 }
-label{
+
+.price-info {
+  margin-top: 40px;
+}
+
+label {
   color: #2563eb;
 }
-h2{
+
+.dark-mode label {
+  color: #93c5fd;
+}
+
+h2 {
   color: black;
+}
+
+.dark-mode h2 {
+  color: #f3f4f6;
 }

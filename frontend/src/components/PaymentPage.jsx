@@ -57,11 +57,12 @@ function PaymentPage() {
       const createdBookingId = bookingResponse.data.id;
 
       await axios.post('http://localhost:8080/api/payments/create', {
-        bookingId: createdBookingId,
-        amount: totalPrice,
-        method: paymentMethod,
-        paymentDate: new Date().toISOString(),
-      });
+    bookingId: createdBookingId,
+    amountPaid: totalPrice,   // ✅ Fix the property name!
+    method: paymentMethod,
+    paymentDate: new Date().toISOString(),
+    });
+
 
       setShowSuccessModal(true);
       setTimeout(() => {

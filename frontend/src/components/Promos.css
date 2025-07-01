@@ -3,6 +3,10 @@
   padding: 60px 20px;
 }
 
+.dark-mode .promo-section {
+  background-color: #111827;
+}
+
 .promo-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -13,6 +17,10 @@
   font-size: 2rem;
   color: #1e3a8a;
   margin-bottom: 2rem;
+}
+
+.dark-mode .promo-container h2 {
+  color: #f9fafb;
 }
 
 .promo-cards {
@@ -30,6 +38,11 @@
   transition: transform 0.2s ease;
 }
 
+.dark-mode .promo-card {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+}
+
 .promo-card:hover {
   transform: translateY(-5px);
 }
@@ -40,9 +53,20 @@
   margin-bottom: 0.5rem;
 }
 
+.dark-mode .promo-card h3 {
+  color: #f3f4f6;
+}
+
 .promo-card .discount {
   color: #2563eb;
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 0.75rem;
+}
+.dark-mode .promo-card p {
+  color: white;
+}
+
+.dark-mode .promo-card p.discount {
+  color: #2563eb;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -23,6 +23,20 @@ function AppContent() {
     localStorage.getItem("biyaheroRole")
   );
 
+  const [darkMode, setDarkMode] = useState(() =>
+  localStorage.getItem("biyaheroDarkMode") === "true"
+  );
+
+  useEffect(() => {
+  const body = document.body;
+  if (darkMode) {
+    body.classList.add("dark-mode");
+  } else {
+    body.classList.remove("dark-mode");
+  }
+  localStorage.setItem("biyaheroDarkMode", darkMode);
+  }, [darkMode]);
+
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const navigate = useNavigate();
 
@@ -43,11 +57,14 @@ function AppContent() {
   return (
     <>
       <Header
-        onLoginClick={() => setLoginOpen(true)}
-        username={loggedInUsername}
-        role={loggedInRole}
-        onLogout={handleLogout}
-      />
+  onLoginClick={() => setLoginOpen(true)}
+  username={loggedInUsername}
+  role={loggedInRole}
+  onLogout={handleLogout}
+  darkMode={darkMode}
+  toggleDarkMode={() => setDarkMode(!darkMode)}
+  />
+
 
       <Routes>
         <Route

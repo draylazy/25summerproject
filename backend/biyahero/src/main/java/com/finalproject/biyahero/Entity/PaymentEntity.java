@@ -14,11 +14,16 @@ public class PaymentEntity {
 
     private double amountPaid;
 
+    private String method;       
+    private String paymentDate;  
+
     public PaymentEntity() {}
 
-    public PaymentEntity(Long bookingId, double amountPaid) {
+    public PaymentEntity(Long bookingId, double amountPaid, String method, String paymentDate) {
         this.bookingId = bookingId;
         this.amountPaid = amountPaid;
+        this.method = method;
+        this.paymentDate = paymentDate;
     }
 
     public Long getId() {
@@ -39,5 +44,21 @@ public class PaymentEntity {
 
     public void setAmountPaid(double amountPaid) {
         this.amountPaid = amountPaid;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(String paymentDate) {
+        this.paymentDate = paymentDate;
     }
 }

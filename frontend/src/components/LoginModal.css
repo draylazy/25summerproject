@@ -251,3 +251,67 @@ p{
     opacity: 1;
   }
 }
+
+
+.dark-mode .modal-content {
+  background: #1e293b;
+}
+
+.dark-mode .modal-content h3 {
+  color: #f1f5f9;
+}
+
+.dark-mode .modal-content label {
+  color: #f1f5f9;
+}
+
+.dark-mode .modal-content input {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+.dark-mode .modal-content input::placeholder {
+  color: #9ca3af;
+}
+
+.dark-mode .modal-content input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+  background-color: #1e293b;
+}
+
+.dark-mode .modal-content button[type='submit'] {
+  background-color: #3b82f6;
+  color: #f1f5f9;
+}
+
+.dark-mode .modal-content button[type='submit']:hover {
+  background-color: #60a5fa;
+}
+
+.dark-mode .divider {
+  color: #9ca3af;
+}
+
+.dark-mode .divider::before,
+.dark-mode .divider::after {
+  background: #475569;
+}
+
+.dark-mode .social-button {
+  background-color: #334155;
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+.dark-mode .social-button:hover {
+  background-color: #475569;
+}
+
+.dark-mode .bottom-text a {
+  color: #93c5fd;
+}
+
+.dark-mode p {
+  color: #f1f5f9;
+}

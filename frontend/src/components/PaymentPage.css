@@ -135,6 +135,13 @@
   padding: 0;
 }
 
+.payment-form button{
+  background-color: #3b82f6;
+}
+.payment-form button:hover{
+  background-color: darkgreen;
+}
+
 .price-breakdown {
   margin-top: 0.5rem;
   background-color: #f9fafb;
@@ -164,4 +171,75 @@
   text-align: center;
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   font-size: 18px;
+}
+
+.dark-mode .payment-wrapper {
+  background-color: #1e293b;
+}
+
+.dark-mode .payment-box {
+  background: #334155;
+}
+
+.dark-mode .summary-box,
+.dark-mode .payment-container {
+  background: #475569;
+}
+
+.dark-mode .summary-box ul {
+  color: #f1f5f9;
+}
+
+.dark-mode .payment-method-buttons button {
+  border-color: transparent;
+}
+
+.dark-mode .payment-method-buttons button.active {
+  border-color: #3b82f6;
+  background-color: #1e40af;
+}
+
+.dark-mode .payment-form input,
+.dark-mode .payment-form select {
+  background-color: #334155;
+  color: #f1f5f9;
+  border: 1px solid #64748b;
+}
+
+.dark-mode .payment-form input:focus,
+.dark-mode .payment-form select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+}
+
+.dark-mode .payment-form select {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+.dark-mode .total-price {
+  color: #f1f5f9;
+}
+
+.dark-mode .toggle-breakdown {
+  color: #93c5fd;
+}
+
+.dark-mode .price-breakdown {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+.dark-mode .payment-success-box {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+.dark-mode .payment-form button {
+  background-color: #3b82f6;
+  color: #f1f5f9;
+}
+
+.dark-mode .payment-form button:hover {
+  background-color: darkgreen;
+  color: #1e293b;
 }
