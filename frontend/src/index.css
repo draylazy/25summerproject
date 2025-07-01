@@ -56,7 +56,7 @@ button:focus-visible {
 }
 
 body.dark-mode {
-  --bg-color: #121212;
+  --bg-color: #1f2937;
   --text-color: #ffffff;
   --card-bg-color: #1e1e1e;
   --border-color: #333;

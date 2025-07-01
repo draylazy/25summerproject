@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './ManageBookings.css';
-import ConfirmModal from './ConfirmModal';
+import './UserManageBookings.css';
+import RefundModal from './RefundModal'; // Import the RefundModal
 import { Helmet } from 'react-helmet';
 
-function ManageBookings() {
+function UserManageBookings() {
   useEffect(() => {
     document.title = "Biyahero | Manage Bookings";
   }, []);
 
   const [bookings, setBookings] = useState([]);
-  const [editingBooking, setEditingBooking] = useState(null);
-  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
-  
-  // 🟢 NEW: Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 10;
+
+  // Refund modal state
+  const [refundBooking, setRefundBooking] = useState(null);
+  const [refundReason, setRefundReason] = useState("");
 
   useEffect(() => {
     fetchBookings();
@@ -23,41 +23,24 @@ function ManageBookings() {
 
   const fetchBookings = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/bookings/with-payments'); // Make sure you use the correct endpoint
+      const response = await axios.get('http://localhost:8080/api/bookings/with-payments');
       setBookings(response.data);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleRefund = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/api/bookings/delete/${id}`);
       fetchBookings();
+      alert("Refund processed successfully.");
     } catch (error) {
-      console.error('Error deleting booking:', error);
+      console.error('Error refunding booking:', error);
+      alert("Failed to process refund.");
     }
   };
 
-  const handleEdit = (booking) => {
-    setEditingBooking(booking);
-  };
-
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`http://localhost:8080/api/bookings/update/${editingBooking.id}`, {
-        ...editingBooking,
-        passengerCount: parseInt(editingBooking.passengerCount)
-      });
-      setEditingBooking(null);
-      fetchBookings();
-    } catch (error) {
-      console.error('Error updating booking:', error);
-    }
-  };
-
-  // 🟢 NEW: Pagination calculations
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
   const currentBookings = bookings.slice(indexOfFirstBooking, indexOfLastBooking);
@@ -101,14 +84,14 @@ function ManageBookings() {
                   <td>{booking.payment?.method || '—'}</td>
                   <td>{booking.payment?.paymentDate || '—'}</td>
                   <td>
-                    <button className="edit-btn" onClick={() => handleEdit(booking)}>
-                      Edit
-                    </button>
                     <button
-                      className="delete-btn"
-                      onClick={() => setConfirmDeleteId(booking.id)}
+                      className="refund-btn"
+                      onClick={() => {
+                        setRefundBooking(booking);
+                        setRefundReason("");
+                      }}
                     >
-                      Delete
+                      Refund
                     </button>
                   </td>
                 </tr>
@@ -116,7 +99,7 @@ function ManageBookings() {
             </tbody>
           </table>
 
-          {/* 🟢 NEW: Pagination controls */}
+          {/* Pagination controls */}
           <div className="pagination">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -135,106 +118,19 @@ function ManageBookings() {
             </button>
           </div>
 
-          {editingBooking && (
-            <div className="edit-modal-overlay">
-              <div className="edit-modal">
-                <h3>Edit Booking</h3>
-                <form onSubmit={handleEditSubmit}>
-                  {/* [ ... the edit form as before ... ] */}
-                  <label>
-                    Booking ID:
-                    <input type="text" value={editingBooking.id} readOnly />
-                  </label>
-                  <label>
-                    Terminal:
-                    <input
-                      name="terminal"
-                      value={editingBooking.terminal}
-                      onChange={(e) =>
-                        setEditingBooking((prev) => ({
-                          ...prev,
-                          terminal: e.target.value
-                        }))
-                      }
-                    />
-                  </label>
-                  <label>
-                    Destination:
-                    <input
-                      name="destination"
-                      value={editingBooking.destination}
-                      onChange={(e) =>
-                        setEditingBooking((prev) => ({
-                          ...prev,
-                          destination: e.target.value
-                        }))
-                      }
-                    />
-                  </label>
-                  <label>
-                    Date:
-                    <input
-                      type="date"
-                      name="date"
-                      value={editingBooking.date}
-                      onChange={(e) =>
-                        setEditingBooking((prev) => ({
-                          ...prev,
-                          date: e.target.value
-                        }))
-                      }
-                    />
-                  </label>
-                  <label>
-                    Bus Type:
-                    <select
-                      name="busType"
-                      value={editingBooking.busType}
-                      onChange={(e) =>
-                        setEditingBooking((prev) => ({
-                          ...prev,
-                          busType: e.target.value
-                        }))
-                      }
-                    >
-                      <option value="Aircon">Aircon</option>
-                      <option value="Non-Aircon">Non-Aircon</option>
-                    </select>
-                  </label>
-                  <label>
-                    Passengers:
-                    <input
-                      type="number"
-                      name="passengerCount"
-                      value={editingBooking.passengerCount}
-                      onChange={(e) =>
-                        setEditingBooking((prev) => ({
-                          ...prev,
-                          passengerCount: e.target.value
-                        }))
-                      }
-                      min="1"
-                    />
-                  </label>
-                  <div className="edit-modal-buttons">
-                    <button type="submit">Save</button>
-                    <button type="button" onClick={() => setEditingBooking(null)}>
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-
-          <ConfirmModal
-            open={confirmDeleteId !== null}
-            message="Are you sure you want to delete this booking?"
-            onConfirm={async () => {
-              await handleDelete(confirmDeleteId);
-              setConfirmDeleteId(null);
+          {/* Refund Modal */}
+          <RefundModal
+            open={refundBooking !== null}
+            booking={refundBooking || {}}
+            reason={refundReason}
+            setReason={setRefundReason}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await handleRefund(refundBooking.id);
+              setRefundBooking(null);
+              setRefundReason("");
             }}
-            onCancel={() => setConfirmDeleteId(null)}
+            onCancel={() => setRefundBooking(null)}
           />
         </>
       )}
@@ -242,4 +138,4 @@ function ManageBookings() {
   );
 }
 
-export default ManageBookings;
+export default UserManageBookings;

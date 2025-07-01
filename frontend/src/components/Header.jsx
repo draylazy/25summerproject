@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
+import MaterialUISwitch from './MaterialUISwitch';
+import ProfileModal from './ProfileModal'; // ✅ New import
+import ChangePasswordModal from "./ChangePasswordModal";
+
 
 function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMode }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false); // ✅ Modal state
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+
 
   return (
     <header className="header">
@@ -17,7 +24,6 @@ function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMo
           <NavLink to="/" end activeclassname="active">
             Book Ticket
           </NavLink>
-
           {role === "ADMIN" ? (
             <NavLink to="/manage-booking" activeclassname="active">
               Admin Dashboard
@@ -27,7 +33,6 @@ function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMo
               Manage Booking
             </NavLink>
           )}
-
           <NavLink to="/travel-info" activeclassname="active">
             Travel Info
           </NavLink>
@@ -37,14 +42,10 @@ function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMo
         </nav>
 
         <div className="header-actions">
-          {/* 🌙 Dark Mode Toggle */}
-          <button
-            className="darkmode-toggle"
-            onClick={toggleDarkMode}
-            title="Toggle Dark Mode"
-          >
-            {darkMode ? "🌙 Dark" : "☀️ Light"}
-          </button>
+          <MaterialUISwitch
+            checked={darkMode}
+            onChange={toggleDarkMode}
+          />
 
           {username ? (
             <div
@@ -57,6 +58,12 @@ function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMo
               </button>
               {menuOpen && (
                 <div className="dropdown">
+                  <button
+                    className="dropdown-button"
+                    onClick={() => setShowProfileModal(true)}
+                  >
+                    View Profile
+                  </button>
                   <button
                     className="logout-button"
                     onClick={onLogout}
@@ -73,6 +80,27 @@ function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMo
           )}
         </div>
       </div>
+
+      <ProfileModal
+  open={showProfileModal}
+  username={username}
+  role={role}
+  email={"user@example.com"}       
+  firstName={"Juan"}
+  lastName={"Dela Cruz"}
+  onClose={() => setShowProfileModal(false)}
+  onChangePassword={() => {
+    setShowProfileModal(false);
+    setShowChangePasswordModal(true);
+  }}
+/>
+    <ChangePasswordModal
+  open={showChangePasswordModal}
+  username={username}
+  onClose={() => setShowChangePasswordModal(false)}
+    />
+
+
     </header>
   );
 }

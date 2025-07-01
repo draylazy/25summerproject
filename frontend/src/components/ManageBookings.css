@@ -116,7 +116,9 @@ button {
   box-sizing: border-box;
 }
 
-
+.delete-btn {
+  background-color: #ef4444;
+}
 
 .edit-modal-buttons {
   display: flex;
@@ -216,5 +218,13 @@ button {
 
 
 .dark-mode tbody :hover{
-  background-color: #104ea5;
+  background-color: #8ab4f82a;
+}
+
+.dark-mode .delete-btn {
+  background-color: #ef4444;
+}
+
+.dark-mode .edit-btn {
+  background-color: #3b82f6;
 }

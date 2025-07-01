@@ -1,0 +1,166 @@
+/* Overlay */
+.refund-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Modal box */
+.refund-modal {
+  box-sizing: border-box;
+  background: white;
+  border-radius: 0.75rem;
+  padding: 2rem 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading */
+.refund-modal h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
+  color: #1f2937;
+}
+
+/* Paragraph */
+.refund-modal p {
+  text-align: center;
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+/* Label */
+.refund-modal label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+  display: block;
+}
+
+/* Textarea */
+.refund-modal textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  resize: vertical;
+  min-height: 100px;
+  color: #000;
+  transition: all 0.2s ease-in-out;
+}
+
+.refund-modal textarea::placeholder {
+  color: #9ca3af;
+}
+
+.refund-modal textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+  background-color: #fff;
+}
+
+/* Button container */
+.refund-modal-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Submit Button */
+.refund-modal button[type="submit"] {
+  flex: 1;
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Cancel Button */
+.refund-modal button[type="button"] {
+  flex: 1;
+  background-color: #e5e7eb;
+  color: #374151;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Hover styles */
+.refund-modal button[type="submit"]:hover {
+  background-color: #1d4ed8;
+}
+
+.refund-modal button[type="button"]:hover {
+  background-color: #d1d5db;
+}
+
+/* Dark Mode Support */
+.dark-mode .refund-modal {
+  background: #1e293b;
+}
+
+.dark-mode .refund-modal h3 {
+  color: #f1f5f9;
+}
+
+.dark-mode .refund-modal p {
+  color: #f1f5f9;
+}
+
+.dark-mode .refund-modal label {
+  color: #f1f5f9;
+}
+
+.dark-mode .refund-modal textarea {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+.dark-mode .refund-modal textarea::placeholder {
+  color: #9ca3af;
+}
+
+.dark-mode .refund-modal textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+  background-color: #1e293b;
+}
+
+.dark-mode .refund-modal button[type="submit"] {
+  background-color: #3b82f6;
+  color: #f1f5f9;
+}
+
+.dark-mode .refund-modal button[type="submit"]:hover {
+  background-color: #60a5fa;
+}
+
+.dark-mode .refund-modal button[type="button"] {
+  background-color: #475569;
+  color: #f1f5f9;
+}
+
+.dark-mode .refund-modal button[type="button"]:hover {
+  background-color: #64748b;
+}

@@ -1,0 +1,60 @@
+.profile-details p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.profile-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.edit-btn,
+.change-pass-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #2563eb;
+}
+
+.change-pass-btn {
+  background-color: #10b981;
+  color: white;
+}
+
+.change-pass-btn:hover {
+  background-color: #059669;
+}
+
+/* Dark Mode Support */
+.dark-mode .edit-btn {
+  background-color: #60a5fa;
+  color: #1e293b;
+}
+
+.dark-mode .edit-btn:hover {
+  background-color: #3b82f6;
+}
+
+.dark-mode .change-pass-btn {
+  background-color: #34d399;
+  color: #1e293b;
+}
+
+.dark-mode .change-pass-btn:hover {
+  background-color: #10b981;
+}

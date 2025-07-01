@@ -80,9 +80,7 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
       aria-labelledby="login-modal-title"
     >
       <div className="modal-content" ref={modalRef}>
-        <button onClick={onClose} className="close-button" aria-label="Close modal">
           <i className="fas fa-times fa-lg"></i>
-        </button>
         <img
           src="src/images/biyahero-logo.png"
           alt="Biyahero Logo"

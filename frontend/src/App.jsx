@@ -12,6 +12,7 @@ import PaymentPage from './components/PaymentPage';
 import PromoSection from './components/Promos';
 import ManageBookings from './components/ManageBookings';
 import LogoutPopup from './components/LogoutPopup';
+import UserManageBookings from './components/UserManageBookings';
 
 function AppContent() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -85,6 +86,12 @@ function AppContent() {
           path="/manage-booking"
           element={
             isAuthenticated ? <ManageBookings /> : <Navigate to="/" replace />
+          }
+        />
+        <Route
+          path="/usermanage-booking"
+          element={
+            isAuthenticated ? <UserManageBookings /> : <Navigate to="/" replace />
           }
         />
         <Route

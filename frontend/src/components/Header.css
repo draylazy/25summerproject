@@ -121,6 +121,7 @@
 }
 
 .dark-mode .username-button {
+  background: none;
   color: #f3f4f6;
 }
 

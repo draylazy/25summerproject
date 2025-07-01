@@ -18,6 +18,24 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/profile/{username}")
+public ResponseEntity<?> getProfile(@PathVariable String username) {
+    Optional<UserEntity> userOpt = userService.findByUsername(username);
+    if (userOpt.isPresent()) {
+        UserEntity user = userOpt.get();
+        return ResponseEntity.ok(Map.of(
+            "username", user.getUsername(),
+            "email", user.getEmail(),
+            "firstName", user.getFirstName(),
+            "lastName", user.getLastName(),
+            "role", user.getRole()
+        ));
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Optional<UserEntity> userOpt = userService.authenticateAndGetUser(

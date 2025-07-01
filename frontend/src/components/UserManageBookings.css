@@ -50,88 +50,8 @@ button {
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.delete-btn {
-  background-color: #ef4444;
-}
-
-.delete-btn:hover {
-  background-color: #b91c1c;
-  transform: translateY(-3px);
-}
-
-.edit-btn {
+.refund-btn {
   background-color: #3b82f6;
-}
-
-.edit-btn:hover {
-  background-color: #2563eb;
-  transform: translateY(-3px);
-}
-
-.edit-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.edit-modal {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-}
-
-.edit-modal h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #111827;
-  text-align: center;
-}
-
-.edit-modal label {
-  display: block;
-  margin-bottom: 1rem;
-  color: #374151;
-}
-
-.edit-modal input,
-.edit-modal select {
-  display: block;
-  width: 90%;                  
-  max-width: 400px;            
-  padding: 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  margin: 12px auto;           
-  font-size: 14px;
-  box-sizing: border-box;
-}
-
-
-
-.edit-modal-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-}
-
-.edit-modal-buttons button {
-  width: 48%;
-  margin-right: 0;
-}
-
-.edit-modal,
-.edit-modal-overlay {
-  transition: all 0.3s ease;
 }
 
 .pagination {
@@ -168,4 +88,64 @@ button {
 .pagination span {
   font-size: 14px;
   color: #374151; 
+}
+
+.dark-mode .manage-bookings-container {
+  background-color: #1e293b;
+}
+
+.dark-mode .manage-bookings-container h2 {
+  color: #f1f5f9;
+}
+
+.dark-mode table {
+  background-color: #334155;
+}
+
+.dark-mode th {
+  background-color: #475569;
+  color: #f1f5f9;
+}
+
+.dark-mode td {
+  color: #e2e8f0;
+}
+
+.dark-mode .edit-modal {
+  background-color: #334155;
+}
+
+.dark-mode .edit-modal h3 {
+  color: #f1f5f9;
+}
+
+.dark-mode .edit-modal label {
+  color: #f1f5f9;
+}
+
+.dark-mode .edit-modal input,
+.dark-mode .edit-modal select {
+  background-color: #475569;
+  color: #f1f5f9;
+  border: 1px solid #64748b;
+}
+
+.dark-mode .pagination span {
+  color: #f1f5f9;
+}
+
+.dark-mode .refund-btn{
+  background-color: #3b82f6;
+}
+
+.dark-mode tbody :hover{
+  background-color: #8ab4f82a;
+}
+
+.dark-mode .delete-btn {
+  background-color: #ef4444;
+}
+
+.dark-mode .edit-btn {
+  background-color: #3b82f6;
 }
