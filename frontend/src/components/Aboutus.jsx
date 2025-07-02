@@ -22,10 +22,34 @@ function AboutUs() {
 <section className="objectives-section">
   <h2>Our Objectives</h2>
   <div className="objectives-grid">
-    <div className="objective">Digitize Terminal Bookings</div>
-    <div className="objective">Enhance Travel Convenience</div>
-    <div className="objective">Empower Commuters & Admins</div>
-    <div className="objective">Promote Safe & Smart Travel</div>
+    <div className="objective">
+    Digitize Terminal Bookings
+    <span className="tooltip">
+      Streamline ticketing and reservation through a user-friendly online platform.
+    </span>
+  </div>
+
+  <div className="objective">
+    Enhance Travel Convenience
+    <span className="tooltip">
+      Reduce wait times with real-time schedules and trip management.
+    </span>
+  </div>
+
+  <div className="objective">
+    Empower Commuters & Admins
+    <span className="tooltip">
+      Provide tools to manage bookings and monitor trips smoothly.
+    </span>
+  </div>
+
+  <div className="objective">
+    Promote Safe & Smart Travel
+    <span className="tooltip">
+      Integrate safety, reliability, and tech-driven improvements with care.
+    </span>
+  </div>
+
   </div>
 </section>
  
