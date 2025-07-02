@@ -15,7 +15,7 @@ body {
 /* Motto Section */
 .motto-section {
   background: linear-gradient(rgba(98, 97, 97, 0.55), rgba(28, 60, 105, 0.85)),
-              url("/images/busterminalbg.jpg") center center / cover no-repeat;
+              url("src/images/busterminalbg.jpg") center center / cover no-repeat;
   color: rgb(240, 242, 249);
   padding: 120px 20px;
   min-height: 70vh;
@@ -175,4 +175,16 @@ body {
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .motto-section {
+  background: linear-gradient(rgba(98, 97, 97, 0.55), rgba(84, 137, 211, 0.85)),
+              url("src/images/busterminalbg.jpg") center center / cover no-repeat;
+  color: rgb(240, 242, 249);
+  padding: 120px 20px;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
