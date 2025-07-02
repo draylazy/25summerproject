@@ -67,10 +67,10 @@ function AboutUs() {
       </p>
     </div>
     <div className="desc-image">
-      <img src="/images/busterminal3.webp" alt="Biyahero Terminal" />
+      <img src="src/images/busterminal3.webp" alt="Biyahero Terminal" />
     </div>
     <div className="desc-image">
-      <img src="/images/busterminal1.webp" alt="Biyahero Mission" />
+      <img src="src/images/busterminal1.webp" alt="Biyahero Mission" />
     </div>
     <div className="desc-text">
       <p>
