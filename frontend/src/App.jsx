@@ -73,7 +73,6 @@ function AppContent() {
           element={
             <>
               <Hero />
-              {/* Pass BOTH isAuthenticated and requireLogin */}
               <BookingForm
                 isAuthenticated={isAuthenticated}
                 requireLogin={() => setLoginOpen(true)}
