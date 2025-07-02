@@ -31,7 +31,11 @@ function TravelHistory() {
             <tr>
               <th>Payment ID</th>
               <th>Booking ID</th>
+              <th>Terminal</th>
+              <th>Destination</th>
+              <th>Bus Type</th>
               <th>Amount Paid</th>
+              <th>Payment Date</th>
             </tr>
           </thead>
           <tbody>
@@ -39,7 +43,11 @@ function TravelHistory() {
               <tr key={item.id}>
                 <td>{item.id}</td>
                 <td>{item.bookingId}</td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
                 <td>₱{item.amountPaid.toFixed(2)}</td>
+                <td>{}</td>
               </tr>
             ))}
           </tbody>

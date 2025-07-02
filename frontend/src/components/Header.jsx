@@ -33,9 +33,13 @@ function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMo
               Manage Booking
             </NavLink>
           )}
-          <NavLink to="/travel-info" activeclassname="active">
-            Travel Info
+          {role === "ADMIN" ? (
+          <NavLink to="/refund-info" activeclassname="active">
+            Refund Info
           </NavLink>
+          ) :(<NavLink to="/travel-info" activeclassname="active">
+            Travel Info
+          </NavLink>)}
           <NavLink to="/about" activeclassname="active">
             About Us
           </NavLink>

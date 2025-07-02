@@ -178,7 +178,7 @@ body {
 }
 
 .dark-mode .motto-section {
-  background: linear-gradient(rgba(35, 39, 47, 0.55), rgba(24, 40, 61, 0.85)),
+  background: linear-gradient(rgba(98, 97, 97, 0.55), rgba(84, 137, 211, 0.85)),
               url("src/images/busterminalbg.jpg") center center / cover no-repeat;
   color: rgb(240, 242, 249);
   padding: 120px 20px;
@@ -187,7 +187,6 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  position: relative;
 }
 
 .objective {

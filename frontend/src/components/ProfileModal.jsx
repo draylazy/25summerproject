@@ -52,8 +52,8 @@ function ProfileModal({
           <button className="change-pass-btn" onClick={onChangePassword}>
             Change Password
           </button>
-          <button className="close-profile-btn" onClick={onClose}>
-            Close
+          <button className="edit-btn" onClick={onClose}>
+            Edit
           </button>
         </div>
       </div>
