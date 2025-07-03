@@ -1,6 +1,7 @@
 package com.finalproject.biyahero.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;  
 import org.springframework.stereotype.Service;
 import com.finalproject.biyahero.Repository.UserRepository;
 import com.finalproject.biyahero.Entity.UserEntity;
@@ -13,18 +14,21 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticate(String email, String password) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;  
+
+    public boolean authenticate(String email, String rawPassword) {
         return userRepository.findByEmail(email)
-            .map(user -> user.getPassword().equals(password))
+            .map(user -> passwordEncoder.matches(rawPassword, user.getPassword()))
             .orElse(false);
     }
 
-    public Optional<UserEntity> authenticateAndGetUser(String email, String password) {
+    public Optional<UserEntity> authenticateAndGetUser(String email, String rawPassword) {
         return userRepository.findByEmail(email)
-            .filter(user -> user.getPassword().equals(password));
+            .filter(user -> passwordEncoder.matches(rawPassword, user.getPassword())); 
     }
 
-    public boolean register(String email, String password, String firstName, String lastName, String username) {
+    public boolean register(String email, String rawPassword, String firstName, String lastName, String username) {
         if (userRepository.findByEmail(email).isPresent()) {
             return false;
         }
@@ -34,7 +38,7 @@ public class UserService {
 
         UserEntity user = new UserEntity();
         user.setEmail(email);
-        user.setPassword(password); 
+        user.setPassword(passwordEncoder.encode(rawPassword)); 
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setUsername(username);
@@ -49,11 +53,11 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public boolean updatePassword(String username, String newPassword) {
+    public boolean updatePassword(String username, String rawNewPassword) {
         Optional<UserEntity> userOpt = userRepository.findByUsername(username);
         if (userOpt.isPresent()) {
             UserEntity user = userOpt.get();
-            user.setPassword(newPassword); 
+            user.setPassword(passwordEncoder.encode(rawNewPassword)); 
             userRepository.save(user);
             return true;
         }

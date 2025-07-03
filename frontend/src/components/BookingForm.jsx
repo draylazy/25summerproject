@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BookingForm.css';
 
+
+function getPHDate() {
+  const now = new Date();
+
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const manilaTime = new Date(utc + 8 * 3600000);
+
+  return manilaTime.toISOString().split("T")[0];
+}
+
+
 function BookingForm({ requireLogin }) {
   useEffect(() => {
     document.title = "Biyahero";
@@ -87,9 +98,16 @@ function BookingForm({ requireLogin }) {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const isLoggedIn = !!localStorage.getItem("biyaheroUsername");
-  if (!isLoggedIn) {
+  const username = localStorage.getItem("biyaheroUsername");
+  const role = localStorage.getItem("biyaheroRole");
+
+  if (!username) {
     requireLogin();
+    return;
+  }
+
+  if (role === "ADMIN") {
+    alert("Admins are not allowed to book tickets.");
     return;
   }
 
@@ -100,7 +118,6 @@ function BookingForm({ requireLogin }) {
     }
   });
 };
-
 
   return (
     <section className="booking-section" id="booking">
@@ -147,13 +164,14 @@ function BookingForm({ requireLogin }) {
 
           <div>
             <label>Date of trip</label>
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              required
-            />
+             <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                min={getPHDate()}
+                required
+              />
           </div>
 
           <div>

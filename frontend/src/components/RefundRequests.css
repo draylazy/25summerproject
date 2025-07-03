@@ -1,0 +1,109 @@
+.refund-requests-container {
+  padding: 2rem;
+  padding-top: 6rem; 
+  max-width: 1900px;
+  margin: 0 auto;
+  background-color: #f9fafb;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.refund-requests-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+th,
+td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+th {
+  background-color: #f3f4f6;
+  color: #374151;
+  font-weight: 600;
+}
+
+td {
+  color: #4b5563;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 12px;
+}
+
+.pagination button {
+  padding: 8px 14px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #2563eb; 
+  transform: translateY(-2px);
+}
+
+.pagination button:disabled {
+  background-color: #d1d5db;
+  color: #6b7280; 
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination span {
+  font-size: 14px;
+  color: #374151; 
+}
+
+.dark-mode .refund-requests-container {
+  background-color: #1e293b;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .refund-requests-container h2 {
+  color: #f1f5f9;
+}
+
+.dark-mode table {
+  background-color: #334155;
+}
+
+.dark-mode th {
+  background-color: #475569;
+  color: #f1f5f9;
+}
+
+.dark-mode td {
+  color: #e2e8f0;
+}

@@ -13,7 +13,6 @@ function ManageBookings() {
   const [editingBooking, setEditingBooking] = useState(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   
-  // 🟢 NEW: Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 10;
 
@@ -22,13 +21,15 @@ function ManageBookings() {
   }, []);
 
   const fetchBookings = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/bookings/with-payments'); // Make sure you use the correct endpoint
-      setBookings(response.data);
-    } catch (error) {
-      console.error('Error fetching bookings:', error);
-    }
-  };
+  try {
+    const response = await axios.get('http://localhost:8080/api/bookings/with-payments');
+    const reversed = response.data.slice().reverse(); 
+    setBookings(reversed);
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+  }
+};
+
 
   const handleDelete = async (id) => {
     try {
@@ -57,7 +58,6 @@ function ManageBookings() {
     }
   };
 
-  // 🟢 NEW: Pagination calculations
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
   const currentBookings = bookings.slice(indexOfFirstBooking, indexOfLastBooking);

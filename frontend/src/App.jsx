@@ -13,6 +13,7 @@ import PromoSection from './components/Promos';
 import ManageBookings from './components/ManageBookings';
 import LogoutPopup from './components/LogoutPopup';
 import UserManageBookings from './components/UserManageBookings';
+import RefundRequests from './components/RefundRequests';
 
 function AppContent() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -97,6 +98,12 @@ function AppContent() {
           path="/travel-info"
           element={
             isAuthenticated ? <TravelHistory /> : <Navigate to="/" replace />
+          }
+        />
+        <Route
+          path="/refund-requests"
+          element={
+            isAuthenticated ? <RefundRequests /> : <Navigate to="/" replace />
           }
         />
         <Route

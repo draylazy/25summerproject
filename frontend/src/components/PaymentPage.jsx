@@ -12,24 +12,23 @@ function PaymentPage() {
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [showBreakdown, setShowBreakdown] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [nextBookingId, setNextBookingId] = useState(null); 
+  const [nextBookingId, setNextBookingId] = useState(null);
+  const [cardNumber, setCardNumber] = useState(''); // NEW
 
-  
   useEffect(() => {
-  const fetchLastBookingId = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/bookings/last-id');
-      const lastId = response.data.lastId || 0;   
-      setNextBookingId(lastId + 1);
-    } catch (error) {
-      console.error('Failed to fetch last booking ID:', error);
-      setNextBookingId('N/A');
-    }
-  };
+    const fetchLastBookingId = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/bookings/last-id');
+        const lastId = response.data.lastId || 0;
+        setNextBookingId(lastId + 1);
+      } catch (error) {
+        console.error('Failed to fetch last booking ID:', error);
+        setNextBookingId('N/A');
+      }
+    };
 
-  fetchLastBookingId();
-}, []);
-
+    fetchLastBookingId();
+  }, []);
 
   const airconSurcharge = data.busType === 'Aircon' ? 50 : 0;
 
@@ -40,6 +39,13 @@ function PaymentPage() {
   };
 
   const totalPrice = getBaseFare();
+
+  const handleCardNumberChange = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.slice(0, 16);
+    const formatted = value.replace(/(.{4})/g, '$1 ').trim();
+    setCardNumber(formatted);
+  };
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
@@ -57,12 +63,11 @@ function PaymentPage() {
       const createdBookingId = bookingResponse.data.id;
 
       await axios.post('http://localhost:8080/api/payments/create', {
-    bookingId: createdBookingId,
-    amountPaid: totalPrice,   // ✅ Fix the property name!
-    method: paymentMethod,
-    paymentDate: new Date().toISOString(),
-    });
-
+        bookingId: createdBookingId,
+        amountPaid: totalPrice,
+        method: paymentMethod,
+        paymentDate: new Date().toISOString(),
+      });
 
       setShowSuccessModal(true);
       setTimeout(() => {
@@ -85,10 +90,7 @@ function PaymentPage() {
         <div className="summary-box">
           <h2>Booking Summary</h2>
           <ul>
-            <li>
-              <strong>Booking Id:</strong>{' '}
-              {nextBookingId !== null ? nextBookingId : 'Loading...'}
-            </li>
+            <li><strong>Booking Id:</strong> {nextBookingId !== null ? nextBookingId : 'Loading...'}</li>
             <li><strong>From:</strong> {data.from}</li>
             <li><strong>To:</strong> {data.to}</li>
             <li><strong>Date:</strong> {data.date}</li>
@@ -131,7 +133,6 @@ function PaymentPage() {
 
         <div className="payment-container">
           <h2>Payment Details</h2>
-
           <p>Choose Payment Method:</p>
           <div className="payment-method-buttons">
             <button
@@ -166,7 +167,15 @@ function PaymentPage() {
                 </div>
                 <div>
                   <label>Card Number</label>
-                  <input type="text" placeholder="1234 5678 9012 3456" required />
+                  <input
+                    type="text"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardNumber}
+                    onChange={handleCardNumberChange}
+                    pattern="\d{4} \d{4} \d{4} \d{4}"
+                    inputMode="numeric"
+                    required
+                  />
                 </div>
                 <div>
                   <label>Expiration Date</label>
@@ -183,7 +192,14 @@ function PaymentPage() {
               <>
                 <div>
                   <label>{paymentMethod.toUpperCase()} Account Number</label>
-                  <input type="text" placeholder="09XXXXXXXXX" required />
+                  <input
+                    type="tel"
+                    pattern="09[0-9]{9}"
+                    maxLength="11"
+                    placeholder="09XXXXXXXXX"
+                    required
+                    title="Enter a valid 11-digit number starting with 09"
+                  />
                 </div>
                 <div>
                   <label>Account Holder Name</label>

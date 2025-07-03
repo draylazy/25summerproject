@@ -22,13 +22,15 @@ function UserManageBookings() {
   }, []);
 
   const fetchBookings = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/bookings/with-payments');
-      setBookings(response.data);
-    } catch (error) {
-      console.error('Error fetching bookings:', error);
-    }
-  };
+  try {
+    const response = await axios.get('http://localhost:8080/api/bookings/with-payments');
+    const reversed = response.data.slice().reverse(); 
+    setBookings(reversed);
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+  }
+};
+
 
   const handleRefund = async (id) => {
     try {
@@ -47,7 +49,7 @@ function UserManageBookings() {
   const totalPages = Math.ceil(bookings.length / bookingsPerPage);
 
   return (
-    <div className="manage-bookings-container">
+    <div className="usermanage-bookings-container">
       <Helmet>
         <title>Biyahero | Manage Bookings</title>
       </Helmet>

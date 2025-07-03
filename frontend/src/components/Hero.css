@@ -9,6 +9,10 @@
   background: #111827;
 }
 
+.dark-mode .hero-button{
+  color: white;
+}
+
 .hero-content {
   max-width: 1200px;
   margin: 0 auto;

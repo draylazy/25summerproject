@@ -13,24 +13,21 @@ function AboutUs() {
       </Helmet>
     <div className="aboutus-container">
  
-      {/* Motto Section */}
-<section className="motto-section">
-  <h1>Alagang Biyahero — Travel Smarter, Ride Better.</h1>
-</section>
+      
+        <section className="motto-section">
+          <h1>Alagang Biyahero — Travel Smarter, Ride Better.</h1>
+        </section>
+
+        <section className="objectives-section">
+          <h2>Our Objectives</h2>
+          <div className="objectives-grid">
+            <div className="objective">Digitize Terminal Bookings</div>
+            <div className="objective">Enhance Travel Convenience</div>
+            <div className="objective">Empower Commuters & Admins</div>
+            <div className="objective">Promote Safe & Smart Travel</div>
+          </div>
+        </section>
  
-{/* Objectives Section */}
-<section className="objectives-section">
-  <h2>Our Objectives</h2>
-  <div className="objectives-grid">
-    <div className="objective">Digitize Terminal Bookings</div>
-    <div className="objective">Enhance Travel Convenience</div>
-    <div className="objective">Empower Commuters & Admins</div>
-    <div className="objective">Promote Safe & Smart Travel</div>
-  </div>
-</section>
- 
- 
-      {/* Meet the Team Section (formerly Testimonials) */}
       <section className="testimonials-section" id="team">
         <div className="testimonials-container">
           <h2>Meet the Team</h2>

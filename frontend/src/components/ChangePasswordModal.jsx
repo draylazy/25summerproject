@@ -12,31 +12,49 @@ function ChangePasswordModal({ open, username, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (newPassword !== confirmPassword) {
       setError("Passwords do not match.");
+      setSuccess("");
       return;
     }
+
     if (newPassword.length < 6) {
       setError("Password must be at least 6 characters.");
+      setSuccess("");
       return;
     }
+
     setError("");
+    setSuccess("");
+
     try {
-      await axios.put(`http://localhost:8080/api/users/${username}/password`, {
+      await axios.put(`http://localhost:8080/api/auth/profile/${username}/password`, {
         newPassword: newPassword
       });
+
       setSuccess("Password updated successfully!");
       setNewPassword("");
       setConfirmPassword("");
     } catch (err) {
+      console.error(err);
       setError("Failed to change password.");
+      setSuccess("");
     }
+  };
+
+  const handleClose = () => {
+    setError("");
+    setSuccess("");
+    setNewPassword("");
+    setConfirmPassword("");
+    onClose();
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="close-button" onClick={onClose}>
+        <button className="close-button" onClick={handleClose}>
           &times;
         </button>
         <h3>Change Password</h3>
@@ -65,7 +83,7 @@ function ChangePasswordModal({ open, username, onClose }) {
             <button type="submit" className="change-pass-btn">
               Update Password
             </button>
-            <button type="button" className="close-profile-btn" onClick={onClose}>
+            <button type="button" className="close-profile-btn" onClick={handleClose}>
               Cancel
             </button>
           </div>
