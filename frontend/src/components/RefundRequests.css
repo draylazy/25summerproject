@@ -1,7 +1,7 @@
 .refund-requests-container {
   padding: 2rem;
   padding-top: 6rem; 
-  max-width: 1900px;
+  max-width: 1400px;
   margin: 0 auto;
   background-color: #f9fafb;
   border-radius: 10px;
@@ -106,4 +106,45 @@ button {
 
 .dark-mode td {
   color: #e2e8f0;
+}
+
+.refund-edit-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.refund-edit-btn:hover:enabled {
+  background-color: #45a049;
+}
+
+/* Deny button styling */
+.refund-delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.refund-delete-btn:hover:enabled {
+  background-color: #d32f2f;
+}
+
+button:disabled {
+  background-color: #aaa !important;
+  color: #eee !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+button:disabled:hover {
+  background-color: #aaa !important;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './UserManageBookings.css';
-import RefundModal from './RefundModal'; // Import the RefundModal
+import RefundModal from './RefundModal';
 import { Helmet } from 'react-helmet';
 
 function UserManageBookings() {
@@ -13,7 +13,6 @@ function UserManageBookings() {
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 10;
 
-  // Refund modal state
   const [refundBooking, setRefundBooking] = useState(null);
   const [refundReason, setRefundReason] = useState("");
 
@@ -101,7 +100,6 @@ function UserManageBookings() {
             </tbody>
           </table>
 
-          {/* Pagination controls */}
           <div className="pagination">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -120,7 +118,6 @@ function UserManageBookings() {
             </button>
           </div>
 
-          {/* Refund Modal */}
           <RefundModal
             open={refundBooking !== null}
             booking={refundBooking || {}}

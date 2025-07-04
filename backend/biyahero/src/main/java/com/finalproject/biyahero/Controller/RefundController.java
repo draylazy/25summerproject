@@ -17,19 +17,27 @@ public class RefundController {
     @Autowired
     private RefundRepository refundRepository;
 
-
     @GetMapping("/all")
     public List<RefundEntity> getAllRefunds() {
-    return refundRepository.findAll();
-}
-
+        return refundRepository.findAll();
+    }
 
     @PostMapping("/submit")
     public ResponseEntity<RefundEntity> submitRefund(@RequestBody RefundEntity refund) {
         refund.setRefundDate(LocalDateTime.now());
+        refund.setProgress("pending"); 
         RefundEntity saved = refundRepository.save(refund);
         return ResponseEntity.ok(saved);
     }
 
-
+    @PutMapping("/update/{id}")
+    public ResponseEntity<RefundEntity> updateRefundProgress(
+            @PathVariable Long id,
+            @RequestBody RefundEntity updatedRefund) {
+        return refundRepository.findById(id).map(refund -> {
+            refund.setProgress(updatedRefund.getProgress());
+            RefundEntity saved = refundRepository.save(refund);
+            return ResponseEntity.ok(saved);
+        }).orElse(ResponseEntity.notFound().build());
+    }
 }

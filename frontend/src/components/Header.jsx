@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
 import MaterialUISwitch from './MaterialUISwitch';
-import ProfileModal from './ProfileModal'; // ✅ New import
+import ProfileModal from './ProfileModal'; 
 import ChangePasswordModal from "./ChangePasswordModal";
 
 
 function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMode }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showProfileModal, setShowProfileModal] = useState(false); // ✅ Modal state
+  const [showProfileModal, setShowProfileModal] = useState(false); 
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
 
@@ -38,7 +38,7 @@ function Header({ onLoginClick, username, role, onLogout, darkMode, toggleDarkMo
             Manage Refunds
           </NavLink>
           ) :(<NavLink to="/travel-info" activeclassname="active">
-            Travel Info
+            Travel History
           </NavLink>)}
           <NavLink to="/about" activeclassname="active">
             About Us

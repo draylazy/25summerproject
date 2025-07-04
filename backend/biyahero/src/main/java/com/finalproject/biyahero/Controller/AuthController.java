@@ -90,4 +90,27 @@ public class AuthController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+            @PutMapping("/profile/{username}")
+        public ResponseEntity<?> updateProfile(
+            @PathVariable String username,
+            @RequestBody Map<String, String> body
+        ) {
+            String email = body.get("email");
+            String firstName = body.get("firstName");
+            String lastName = body.get("lastName");
+
+            if (email == null || email.isBlank()) {
+                return ResponseEntity.badRequest().body("Email cannot be empty.");
+            }
+
+            boolean updated = userService.updateProfile(username, email, firstName, lastName);
+            if (updated) {
+                return ResponseEntity.ok("Profile updated successfully.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }
+
 }

@@ -17,6 +17,10 @@ public class RefundEntity {
 
     private LocalDateTime refundDate;
 
+    @Column(name = "progress")
+    private String progress; 
+
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -29,4 +33,10 @@ public class RefundEntity {
 
     public LocalDateTime getRefundDate() { return refundDate; }
     public void setRefundDate(LocalDateTime refundDate) { this.refundDate = refundDate; }
+    public String getProgress() {
+        return progress;
+    }
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
 }

@@ -63,4 +63,18 @@ public class UserService {
         }
         return false;
     }
+
+            public boolean updateProfile(String username, String email, String firstName, String lastName) {
+            Optional<UserEntity> userOpt = userRepository.findByUsername(username);
+            if (userOpt.isPresent()) {
+                UserEntity user = userOpt.get();
+                user.setEmail(email);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                userRepository.save(user);
+                return true;
+            }
+            return false;
+        }
+
 }
