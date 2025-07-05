@@ -191,27 +191,24 @@ body {
 
 .objective {
   position: relative;
-  /* keep existing styles */
+  
 }
 
 .tooltip {
   visibility: hidden;
   opacity: 0;
-  width: 240px;
   background-color: #1e3a8a;
   color: #fff;
-  text-align: left;
-  padding: 10px 12px;
+  padding: 12px;
   border-radius: 8px;
-  position: absolute;
-  bottom: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  font-size: 0.85rem;
-  line-height: 1.4;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
   transition: opacity 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
 }
 
 .tooltip::after {
@@ -228,4 +225,11 @@ body {
 .objective:hover .tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .tooltip {
+    font-size: 0.85rem;
+  }
+
 }

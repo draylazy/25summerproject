@@ -17,6 +17,7 @@ function ProfileModal({
     firstName: "",
     lastName: ""
   });
+  const [localAlert, setLocalAlert] = useState(null);
 
   useEffect(() => {
     if (open && username) {
@@ -56,10 +57,12 @@ function ProfileModal({
         ...formValues
       }));
       setEditMode(false);
-      alert("Profile updated successfully.");
+      setLocalAlert("✅ Profile updated successfully.");
+      setTimeout(() => setLocalAlert(null), 2500);
     } catch (err) {
       console.error("Error updating profile:", err);
-      alert("Failed to update profile.");
+      setLocalAlert("❌ Failed to update profile.");
+      setTimeout(() => setLocalAlert(null), 2500);
     }
   };
 
@@ -132,6 +135,7 @@ function ProfileModal({
             </>
           )}
         </div>
+        {localAlert && <div className="local-alert">{localAlert}</div>}
       </div>
     </div>
   );

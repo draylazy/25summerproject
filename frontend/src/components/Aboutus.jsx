@@ -21,11 +21,32 @@ function AboutUs() {
         <section className="objectives-section">
           <h2>Our Objectives</h2>
           <div className="objectives-grid">
-            <div className="objective">Digitize Terminal Bookings</div>
-            <div className="objective">Enhance Travel Convenience</div>
-            <div className="objective">Empower Commuters & Admins</div>
-            <div className="objective">Promote Safe & Smart Travel</div>
+            <div className="objective">
+              Digitize Terminal Bookings
+              <div className="tooltip">
+                Streamline the ticketing and reservation process by offering a fast, user-friendly online booking system accessible via web or mobile.
+              </div>
+            </div>
+            <div className="objective">
+              Enhance Travel Convenience
+              <div className="tooltip">
+                Provide real-time schedules, trip management, and support features to reduce wait times and increase traveler confidence.
+              </div>
+            </div>
+            <div className="objective">
+              Empower Commuters & Admins
+              <div className="tooltip">
+                Offer tools for both passengers and terminal staff/admins to manage bookings, monitor trips, and ensure smooth operations.
+              </div>
+            </div>
+            <div className="objective">
+              Promote Safe & Smart Travel
+              <div className="tooltip">
+                Encourage digital adoption in public transport while integrating safety, reliability, and alaga into every step of the journey.
+              </div>
+            </div>
           </div>
+
         </section>
  
       <section className="testimonials-section" id="team">
@@ -33,17 +54,17 @@ function AboutUs() {
           <h2>Meet the Team</h2>
           <div className="testimonials-grid">
             <div className="testimonial">
-              <img src="/team/louie.jpg" alt="Louie Bajamunde" />
+              <img src="src/images/cropped_circle_bajamunde.png" alt="Louie Bajamunde" />
               <h4>Louie Bajamunde</h4>
               <p>Founder & Developer</p>
             </div>
             <div className="testimonial">
-              <img src="/team/jhon.jpg" alt="Jhon Zydney Belia" />
+              <img src="src/images/jhon.jpg" alt="Jhon Zydney Belia" />
               <h4>Jhon Zydney Belia</h4>
               <p>Founder & Developer</p>
             </div>
             <div className="testimonial">
-              <img src="/team/james.jpg" alt="James Adriane Queddeng" />
+              <img src="src/images/james.jpg" alt="James Adriane Queddeng" />
               <h4>James Adriane Queddeng</h4>
               <p>Founder & Developer</p>
             </div>

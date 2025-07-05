@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BookingForm.css';
 
-
 function getPHDate() {
   const now = new Date();
-
   const utc = now.getTime() + now.getTimezoneOffset() * 60000;
   const manilaTime = new Date(utc + 8 * 3600000);
-
   return manilaTime.toISOString().split("T")[0];
 }
-
 
 function BookingForm({ requireLogin }) {
   useEffect(() => {
@@ -19,7 +15,6 @@ function BookingForm({ requireLogin }) {
   }, []);
 
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     from: '',
     to: '',
@@ -67,6 +62,7 @@ function BookingForm({ requireLogin }) {
   };
 
   const [currentPrice, setCurrentPrice] = useState(null);
+  const [localAlert, setLocalAlert] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -96,33 +92,39 @@ function BookingForm({ requireLogin }) {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const username = localStorage.getItem("biyaheroUsername");
-  const role = localStorage.getItem("biyaheroRole");
+    const username = localStorage.getItem("biyaheroUsername");
+    const role = localStorage.getItem("biyaheroRole");
 
-  if (!username) {
-    requireLogin();
-    return;
-  }
-
-  if (role === "ADMIN") {
-    alert("Admins are not allowed to book tickets.");
-    return;
-  }
-
-  navigate('/payment', {
-    state: {
-      ...formData,
-      pricePerPassenger: currentPrice
+    if (!username) {
+      setLocalAlert("⚠️ You must log in to proceed with booking.");
+      requireLogin();
+      return;
     }
-  });
-};
+
+    if (role === "ADMIN") {
+      setLocalAlert("⛔ Admins are not allowed to book tickets.");
+      return;
+    }
+
+    navigate('/payment', {
+      state: {
+        ...formData,
+        pricePerPassenger: currentPrice
+      }
+    });
+  };
 
   return (
     <section className="booking-section" id="booking">
       <div className="booking-container">
         <h2>Book Your Ticket</h2>
+
+        {localAlert && (
+          <div className="local-alert">{localAlert}</div>
+        )}
+
         <form className="booking-form" onSubmit={handleSubmit}>
           <div>
             <label>From</label>

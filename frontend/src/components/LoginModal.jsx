@@ -5,6 +5,7 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
   const modalRef = useRef(null);
   const [isSignup, setIsSignup] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [localAlert, setLocalAlert] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -23,57 +24,57 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
   }, [open, onClose]);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const email = e.target["email"].value;
-  const password = e.target["password"].value;
-  const firstName = e.target["firstName"]?.value;
-  const lastName = e.target["lastName"]?.value;
-  const username = e.target["username"]?.value;
+    const email = e.target["email"].value;
+    const password = e.target["password"].value;
+    const firstName = e.target["firstName"]?.value;
+    const lastName = e.target["lastName"]?.value;
+    const username = e.target["username"]?.value;
 
-  if (password.length < 6) {
-    alert("Password must be at least 6 characters.");
-    return;
-  }
-
-  const body = isSignup
-    ? { email, password, firstName, lastName, username }
-    : { email, password };
-
-  try {
-    const endpoint = isSignup ? "signup" : "login";
-    const response = await fetch(`http://localhost:8080/api/auth/${endpoint}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    if (response.ok) {
-      if (isSignup) {
-        alert("✅ Account created! You can now log in.");
-        setIsSignup(false);
-      } else {
-        const data = await response.json();
-
-        if (onLoginSuccess && data.username && data.role) {
-          onLoginSuccess(data.username, data.role);
-        }
-
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          onClose();
-        }, 2000);
-      }
-    } else {
-      const errorText = await response.text();
-      alert(errorText || "An error occurred.");
+    if (password.length < 6) {
+      setLocalAlert("⚠️ Password must be at least 6 characters.");
+      return;
     }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("A network error occurred.");
-  }
-};
+
+    const body = isSignup
+      ? { email, password, firstName, lastName, username }
+      : { email, password };
+
+    try {
+      const endpoint = isSignup ? "signup" : "login";
+      const response = await fetch(`http://localhost:8080/api/auth/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (response.ok) {
+        if (isSignup) {
+          setLocalAlert("✅ Account created! You can now log in.");
+          setIsSignup(false);
+        } else {
+          const data = await response.json();
+
+          if (onLoginSuccess && data.username && data.role) {
+            onLoginSuccess(data.username, data.role);
+          }
+
+          setShowSuccess(true);
+          setTimeout(() => {
+            setShowSuccess(false);
+            onClose();
+          }, 2000);
+        }
+      } else {
+        const errorText = await response.text();
+        setLocalAlert(errorText || "⚠️ An error occurred.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setLocalAlert("⚠️ A network error occurred.");
+    }
+  };
 
   if (!open) return null;
 
@@ -85,7 +86,7 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
       aria-labelledby="login-modal-title"
     >
       <div className="modal-content" ref={modalRef}>
-          <i className="fas fa-times fa-lg"></i>
+        <i className="fas fa-times fa-lg"></i>
         <img
           src="src/images/biyahero-logo.png"
           alt="Biyahero Logo"
@@ -96,6 +97,8 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
         </h3>
 
         <form onSubmit={handleSubmit}>
+          {localAlert && <div className="local-alert">{localAlert}</div>}
+
           {isSignup && (
             <>
               <div className="form-group">
