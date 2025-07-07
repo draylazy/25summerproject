@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './Hero.css';
 
 const images = [
-  'src/images/terminalhero.avif',
-  'src/images/busterminal1.webp',
+  'src/images/carcar.webp',
   'src/images/busterminal2.webp',
-  'src/images/busterminal3.webp'
+  'src/images/busterminal3.webp',
+  'src/images/sidlakdanao.webp',
+  'src/images/Medelin.webp',
+
 ];
 
 function Hero() {

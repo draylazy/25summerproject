@@ -4,15 +4,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'r
 import Header from './components/Header';
 import Hero from './components/Hero';
 import BookingForm from './components/BookingForm';
-import TravelHistory from './components/TravelHistory';
-import About from './components/Aboutus';
+import TravelHistory from './Pages/TravelHistory';
+import About from './Pages/Aboutus';
 import Contact from './components/Contact';
 import LoginModal from './components/LoginModal';
-import PaymentPage from './components/PaymentPage';
+import PaymentPage from './Pages/PaymentPage';
 import PromoSection from './components/Promos';
-import ManageBookings from './components/ManageBookings';
+import ManageBookings from './Pages/ManageBookings';
 import LogoutPopup from './components/LogoutPopup';
-import UserManageBookings from './components/UserManageBookings';
+import UserManageBookings from './Pages/UserManageBookings';
 import RefundRequests from './components/RefundRequests';
 
 function AppContent() {
