@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ManageBookings.css';
-import ConfirmModal from './ConfirmModal';
+import ConfirmModal from '../components/ConfirmModal';
 import { Helmet } from 'react-helmet';
 
 function ManageBookings() {

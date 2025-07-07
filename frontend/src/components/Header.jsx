@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
-import MaterialUISwitch from './MaterialUISwitch';
+import MaterialUISwitch from '/src/Mui/MaterialUISwitch';
 import ProfileModal from './ProfileModal'; 
 import ChangePasswordModal from "./ChangePasswordModal";
 

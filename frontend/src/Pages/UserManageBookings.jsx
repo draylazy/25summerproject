@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './UserManageBookings.css';
-import RefundModal from './RefundModal';
+import RefundModal from '../components/RefundModal';
 import { Helmet } from 'react-helmet';
 
 function UserManageBookings() {
