@@ -159,7 +159,7 @@
   background-color: #2563eb;
 }
 
-.change-pass-btn {
+.modal-content .change-pass-btn  {
   background-color: #10b981;
   color: white;
 }
@@ -244,122 +244,11 @@
 }
 
 .dark-mode .change-pass-btn:hover {
-  background-color: #10b981;
+  background-color: #2563eb;
 }
 
 .dark-mode .local-alert {
   background-color: #064e3b;
   color: #bbf7d0;
   border-color: #10b981;
-}
-
-.payment-method-buttons button.active {
-  border: 2px solid #3b82f6;
-  background-color: #e0f2fe;
-}
-
-.payment-method-buttons button img {
-  width: 50px;
-  height: auto;
-  transition: filter 0.3s ease;
-}
-
-.dark-mode .payment-method-buttons button.active img {
-  filter: brightness(1.2); 
-}
-
-
-.payment-method-buttons button.active {
-  border: 2px solid #3b82f6;
-  background-color: #e0f2fe;
-}
-
-.payment-method-buttons button {
-  background-color: transparent;
-  border: 2px solid transparent;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.dark-mode .payment-method-buttons button.active {
-  border: 2px solid #3b82f6;
-  background-color: #e0f2fe;
-}
-
-.summary-box {
-  flex: 1;
-  background-color: #f9fafb;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.summary-box h2 {
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #111827;
-}
-
-.summary-box ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.summary-box li {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1rem;
-  color: #374151;
-}
-
-.total-price {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.toggle-breakdown {
-  background-color: transparent;
-  border: none;
-  color: #2563eb;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.price-breakdown {
-  margin-top: 1rem;
-  background: #f3f4f6;
-  padding: 1rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.dark-mode .summary-box {
-  background-color: #1e293b;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.dark-mode .summary-box h2,
-.dark-mode .summary-box li,
-.dark-mode .total-price {
-  color: #f1f5f9;
-}
-
-.dark-mode .price-breakdown {
-  background: #334155;
-  color: #e2e8f0;
 }

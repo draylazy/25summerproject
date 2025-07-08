@@ -80,7 +80,7 @@ function ChangePasswordModal({ open, username, onClose }) {
           {error && <p style={{ color: "red" }}>{error}</p>}
           {success && <p style={{ color: "green" }}>{success}</p>}
           <div className="profile-actions">
-            <button type="submit" className="change-pass-btn">
+            <button type="submit" className="updated-pass-btn">
               Update Password
             </button>
             <button type="button" className="close-profile-btn" onClick={handleClose}>
