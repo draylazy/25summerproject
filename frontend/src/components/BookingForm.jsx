@@ -187,29 +187,29 @@ function BookingForm({ requireLogin }) {
               <option value="Aircon">Aircon</option>
             </select>
           </div>
+<div className="passenger-price-row">
+  <div className="passenger-column">
+    <label>Passengers</label>
+    <input
+      type="number"
+      name="passengers"
+      value={formData.passengers}
+      onChange={handleChange}
+      min="1"
+      required
+    />
+  </div>
 
-          <div>
-            <label>Passengers</label>
-            <input
-              type="number"
-              name="passengers"
-              value={formData.passengers}
-              onChange={handleChange}
-              min="1"
-              required
-            />
-          </div>
+  <div className="price-column">
+    <label>Price per passenger</label>
+    <div className="price-display">
+      ₱{currentPrice !== null ? currentPrice : ''}
+    </div>
+  </div>
 
-          {currentPrice && (
-            <div className="price-info">
-              <strong>Price per passenger: ₱{currentPrice}</strong>
-              <br />
-              <span>
-                Total for {formData.passengers} passenger(s): ₱
-                {currentPrice * parseInt(formData.passengers)}
-              </span>
-            </div>
-          )}
+</div>
+
+
 
           <div className="full-width">
             <button type="submit">Continue Payment</button>

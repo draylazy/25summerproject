@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./ProfileModal.css";
 
-function ProfileModal({
-  open,
-  username,
-  onClose,
-  onChangePassword
-}) {
+function ProfileModal({ open, username, onClose, onChangePassword }) {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [formValues, setFormValues] = useState({
+    username: "",
     email: "",
     firstName: "",
     lastName: ""
@@ -29,6 +25,7 @@ function ProfileModal({
         .then((res) => {
           setProfile(res.data);
           setFormValues({
+            username: res.data.username,
             email: res.data.email,
             firstName: res.data.firstName,
             lastName: res.data.lastName
@@ -75,66 +72,81 @@ function ProfileModal({
           &times;
         </button>
         <h3>User Profile</h3>
+
+        <img
+        src="src/images/profile.png"
+        alt="Profile"
+        className="profile-picture"
+        />
+
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {profile && (
-          <div className="profile-details">
-            <p><strong>Username:</strong> {profile.username}</p>
+{profile && (
+  <div className={`profile-details ${editMode ? "editing" : "viewing"}`}>
+    <div className="input-group">
+      <label>Username:</label>
+      <input
+        type="text"
+        name="username"
+        value={editMode ? formValues.username || profile.username : profile.username}
+        onChange={editMode ? handleInputChange : undefined}
+        disabled={!editMode}
+      />
+    </div>
 
-            {editMode ? (
-              <>
-                <p>
-                  <strong>Email:</strong>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formValues.email}
-                    onChange={handleInputChange}
-                  />
-                </p>
-                <p>
-                  <strong>First Name:</strong>
-                  <input
-                    name="firstName"
-                    value={formValues.firstName}
-                    onChange={handleInputChange}
-                  />
-                </p>
-                <p>
-                  <strong>Last Name:</strong>
-                  <input
-                    name="lastName"
-                    value={formValues.lastName}
-                    onChange={handleInputChange}
-                  />
-                </p>
-              </>
-            ) : (
-              <>
-                <p><strong>Email:</strong> {profile.email}</p>
-                <p><strong>First Name:</strong> {profile.firstName}</p>
-                <p><strong>Last Name:</strong> {profile.lastName}</p>
-              </>
-            )}
-          </div>
-        )}
+    <div className="input-group">
+      <label>Email:</label>
+      <input
+        type="email"
+        name="email"
+        value={editMode ? formValues.email : profile.email}
+        onChange={editMode ? handleInputChange : undefined}
+        disabled={!editMode}
+      />
+    </div>
+
+    <div className="input-group">
+      <label>First Name:</label>
+      <input
+        type="text"
+        name="firstName"
+        value={editMode ? formValues.firstName : profile.firstName}
+        onChange={editMode ? handleInputChange : undefined}
+        disabled={!editMode}
+      />
+    </div>
+
+    <div className="input-group">
+      <label>Last Name:</label>
+      <input
+        type="text"
+        name="lastName"
+        value={editMode ? formValues.lastName : profile.lastName}
+        onChange={editMode ? handleInputChange : undefined}
+        disabled={!editMode}
+      />
+    </div>
+  </div>
+)}
+
         <div className="profile-actions">
-          {editMode ? (
-            <>
-              <button className="save-btn" onClick={handleSave}>Save</button>
-              <button className="cancel-btn" onClick={() => setEditMode(false)}>Cancel</button>
-            </>
-          ) : (
-            <>
-              <button className="change-pass-btn" onClick={onChangePassword}>
-                Change Password
-              </button>
-              <button className="edit-btn" onClick={() => setEditMode(true)}>
-                Edit
-              </button>
-            </>
-          )}
+          <button className="change-pass-btn" onClick={onChangePassword}>
+            Change Password
+          </button>
+          <button
+            className="edit-btn"
+            onClick={() => {
+              if (editMode) {
+                handleSave();
+              } else {
+                setEditMode(true);
+              }
+            }}
+          >
+            {editMode ? "Done" : "Edit"}
+          </button>
         </div>
+
         {localAlert && <div className="local-alert">{localAlert}</div>}
       </div>
     </div>

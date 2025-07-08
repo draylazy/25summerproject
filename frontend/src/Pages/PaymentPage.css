@@ -31,7 +31,7 @@
 .payment-container {
   flex: 1;
   background: #ffffff;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
@@ -43,7 +43,27 @@
   color: #374151;
 }
 
+.choose-payment-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.payment-method-group {
+  margin-bottom: 1.5rem;
+}
+
+dark-mode .choose-payment-label {
+  color: #f1f5f9;
+  border-bottom: 1px solid #475569;
+}
+
+
 .payment-method-buttons {
+  background-color: transparent;
   display: flex;
   gap: 1rem;
   margin: 1rem 0;
@@ -69,10 +89,22 @@
   background-color: #eff6ff;
 }
 
+.payment-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem; 
+}
+
+.payment-form label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #3d6ab1;
+}
+
 .payment-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem; 
 }
 
 .payment-form input,
@@ -125,14 +157,17 @@
 }
 
 .toggle-breakdown {
-  margin-left: 8px;
-  font-size: 14px;
-  color: #2563eb;
-  background: none;
+  background-color: transparent;
   border: none;
+  color: var(--highlight-color, #1e40af);
+  font-size: 0.9rem;
   cursor: pointer;
-  text-decoration: underline;
-  padding: 0;
+  margin-top: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.toggle-breakdown:hover {
+  color: #1e40af;
 }
 
 .payment-form button{
@@ -142,13 +177,46 @@
   background-color: darkgreen;
 }
 
+.price-breakdown-wrapper {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  transform: scaleY(0.95);
+  transform-origin: top;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.4s ease,
+    transform 0.3s ease;
+}
+
+.price-breakdown-wrapper.expanded {
+  max-height: 1000px; 
+  opacity: 1;
+  margin-top: 1rem;
+  transform: scaleY(1);
+}
+
+
+
+
 .price-breakdown {
-  margin-top: 0.5rem;
-  background-color: #f9fafb;
-  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
   border-radius: 8px;
-  font-size: 14px;
-  color: #374151;
+  font-size: 0.9rem;
+  color: var(--text-color, #fff);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.price-breakdown .summary-value {
+  font-weight: 700;
+}
+
+
+.price-breakdown p,
+.price-breakdown strong {
+  margin: 0.4rem 0;
 }
 
 .payment-success-modal {
@@ -186,17 +254,22 @@
   background: #475569;
 }
 
-.dark-mode .summary-box ul {
-  color: #f1f5f9;
+.summary-box ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.dark-mode .payment-method-buttons button {
+.summary-box ul li:last-child {
+  border-bottom: none;
+}
+.dark-mode .payment-method-buttons button{
   border-color: transparent;
+  background-color: #bcc7e9;
 }
 
 .dark-mode .payment-method-buttons button.active {
-  border-color: #3b82f6;
-  background-color: #1e40af;
+  border-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .dark-mode .payment-form input,
@@ -222,11 +295,11 @@
 }
 
 .dark-mode .toggle-breakdown {
+  background-color: transparent;
   color: #93c5fd;
 }
 
 .dark-mode .price-breakdown {
-  background-color: #334155;
   color: #f1f5f9;
 }
 
@@ -242,4 +315,115 @@
 .dark-mode .payment-form button:hover {
   background-color: darkgreen;
   color: #1e293b;
+}
+
+
+.booking-summary-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.6;
+  margin-bottom: 0.3rem;
+  color: #000;
+}
+
+.summary-field input {
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: transparent;
+  color: #111827;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.dark-mode .summary-field label {
+  color: #ffffff;
+  opacity: 0.4;
+}
+
+.dark-mode .summary-field input {
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.summary-box {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.summary-label {
+  flex: 1;
+  font-size: 0.85rem;
+  opacity: 1;
+}
+
+.grand-total-label {
+  opacity: 1 !important;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+
+.summary-value {
+  flex: 1;
+  text-align: right;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.summary-value.total {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #1e3a8a;
+}
+
+
+.total-price .summary-item .total {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.dark-mode .summary-box {
+  background: #1f2937;
+}
+
+.dark-mode .summary-label {
+  color: #d1d5db;
+  opacity: 0.8;
+}
+
+.dark-mode .summary-value {
+  color: #f3f4f6;
+}
+
+.dark-mode .summary-value.total {
+  color: #60a5fa;
+}
+
+.dark-mode .payment-wrapper label{
+color: white;
+
 }

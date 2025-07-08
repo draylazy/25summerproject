@@ -222,34 +222,27 @@
 }
 
 
-p{
-  color: #000000;
-}
 
 .login-success-popup {
-  position: fixed;
-  top: 20%;
+  position: absolute;
+  top: 10px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #ecfdf5;
+  transform: translateX(-50%);
+  background-color: #d1fae5;
   color: #065f46;
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  animation: fadeInScale 0.4s ease;
-  text-align: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  opacity: 0;
+  animation: popupFadeSlide 0.6s ease-out forwards, fadeOut 0.5s ease-out 1.5s forwards;
 }
 
-@keyframes fadeInScale {
-  from {
-    transform: scale(0.95) translate(-50%, -50%);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translate(-50%, -50%);
-    opacity: 1;
-  }
+
+.modal-content {
+  position: relative;
 }
 
 
@@ -314,4 +307,83 @@ p{
 
 .dark-mode p {
   color: #f1f5f9;
+}
+
+.signup-alert-wrapper {
+  display: flex;
+  justify-content: flex-start; /* aligns left */
+  padding-left: 1rem; /* shifts alert slightly to the right */
+  margin-bottom: 1rem;
+}
+
+.signup-success-alert {
+  background-color: #f4a7a7;
+  color: #630808;
+  font-family: 'Inter', sans-serif;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e86b6b;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  animation: fadeInScale 0.3s ease;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+
+
+
+/* Reuse your existing animation */
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Optional for dark mode */
+.dark-mode .signup-success-alert {
+  background-color: #f4a7a7;
+  color: #630808;
+  font-family: 'Inter', sans-serif;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e86b6b;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  animation: fadeInScale 0.3s ease;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+/* 🌙 Dark mode fix for login success popup */
+.dark-mode .login-success-popup {
+  background-color: #064e3b;  /* dark green background */
+  color: #bbf7d0;             /* light green text */
+  border: 1px solid #10b981;  /* optional border to match light mode */
+}
+
+@keyframes popupFadeSlide {
+  from {
+    transform: translateX(-50%) translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
 }

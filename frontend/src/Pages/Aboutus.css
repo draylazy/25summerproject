@@ -68,7 +68,14 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  position: relative;
 }
+
+.objective:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
 
 .dark-mode .objective {
   background-color: #334155;
@@ -82,6 +89,18 @@ body {
   padding: 80px 0;
 }
 
+.image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.image-container img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
 .dark-mode .testimonials-section {
   background: #1e293b;
 }
@@ -189,26 +208,26 @@ body {
   text-align: center;
 }
 
-.objective {
-  position: relative;
-  
-}
 
 .tooltip {
-  visibility: hidden;
-  opacity: 0;
-  background-color: #1e3a8a;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 58, 138, 0.9);
   color: #fff;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 12px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  transition: opacity 0.3s ease;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .tooltip::after {
@@ -223,8 +242,12 @@ body {
 }
 
 .objective:hover .tooltip {
-  visibility: visible;
   opacity: 1;
+  visibility: visible;
+}
+
+.objective:hover .image-container img {
+  transform: scale(1.05);
 }
 
 @media screen and (max-width: 768px) {

@@ -8,7 +8,7 @@
 }
 
 .dark-mode .header {
-  background-color: #1f2937; /* Dark background */
+  background-color: #1f2937; 
   box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
@@ -104,13 +104,11 @@
   color: white;
 }
 
-/* Username container */
 .user-menu {
   position: relative;
   display: inline-block;
 }
 
-/* Username button styling */
 .username-button {
   background: none;
   border: none;
@@ -125,7 +123,6 @@
   color: #f3f4f6;
 }
 
-/* Dropdown container */
 .dropdown {
   position: absolute;
   right: 0;
@@ -133,18 +130,31 @@
   background: #fff;
   color: #333;
   box-shadow: 0 2px 20px rgba(0,0,0,0.2);
-  border-radius: 4px;
-  min-width: 120px;
+  border-radius: 12px;
+  min-width: 12px;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem 0;
 }
+
 
 .dark-mode .dropdown {
-  background: #374151;
-  color: #e5e7eb;
-  box-shadow: 0 2px 20px rgba(255,255,255,0.1);
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #333;
+  color: #333;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  min-width: 120px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem 0;
 }
 
-/* Log out button */
+
 .logout-button {
   width: 100%;
   background: none;
@@ -158,6 +168,7 @@
 
 .dark-mode .logout-button {
   color: #f3f4f6;
+
 }
 
 .logout-button:hover {
@@ -180,3 +191,29 @@
 .dark-mode .darkmode-toggle {
   color: #f3f4f6;
 }
+
+.dropdown-button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: black;
+  padding: 0.75em;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 500;
+
+}
+
+.dark-mode .dropdown-button {
+  color: #f3f4f6;
+}
+
+.dropdown-button:hover {
+  background: #f3f4f6;
+  
+}
+
+.dark-mode .dropdown-button:hover {
+  background: #475569;
+}
+

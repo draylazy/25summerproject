@@ -23,6 +23,12 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
     };
   }, [open, onClose]);
 
+  useEffect(() => {
+    if (open) {
+      setLocalAlert("");
+    }
+  }, [open, isSignup]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,10 +61,12 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
           setIsSignup(false);
         } else {
           const data = await response.json();
-
           if (onLoginSuccess && data.username && data.role) {
-            onLoginSuccess(data.username, data.role);
-          }
+    onLoginSuccess(data.username, data.role);
+  }
+
+  setLocalAlert(""); // ✅ Clear alert on successful login
+  setShowSuccess(true);
 
           setShowSuccess(true);
           setTimeout(() => {
@@ -79,72 +87,43 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
   if (!open) return null;
 
   return (
-    <div
-      className="modal-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="login-modal-title"
-    >
+    <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
       <div className="modal-content" ref={modalRef}>
         <i className="fas fa-times fa-lg"></i>
-        <img
-          src="src/images/biyahero-logo.png"
-          alt="Biyahero Logo"
-          className="login-logo"
-        />
+        <img src="src/images/biyahero-logo.png" alt="Biyahero Logo" className="login-logo" />
         <h3 id="login-modal-title">
           {isSignup ? "Sign Up for BIYAHERO" : "Log In to BIYAHERO"}
         </h3>
 
         <form onSubmit={handleSubmit}>
-          {localAlert && <div className="local-alert">{localAlert}</div>}
+          {localAlert && (
+            <div className="form-group alert-wrapper">
+              <div className="signup-success-alert">{localAlert}</div>
+            </div>
+          )}
 
           {isSignup && (
             <>
               <div className="form-group">
                 <label htmlFor="firstName">First Name</label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  required
-                  placeholder="Your first name"
-                />
+                <input type="text" id="firstName" name="firstName" required placeholder="Your first name" />
               </div>
 
               <div className="form-group">
                 <label htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  required
-                  placeholder="Your last name"
-                />
+                <input type="text" id="lastName" name="lastName" required placeholder="Your last name" />
               </div>
 
               <div className="form-group">
                 <label htmlFor="username">Username</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  required
-                  placeholder="Choose a username"
-                />
+                <input type="text" id="username" name="username" required placeholder="Choose a username" />
               </div>
             </>
           )}
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              placeholder="you@example.com"
-            />
+            <input type="email" id="email" name="email" required placeholder="you@example.com" />
           </div>
 
           <div className="form-group">
@@ -167,19 +146,11 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
               </div>
               <div className="social-login">
                 <button type="button" className="social-button google">
-                  <img
-                    src="src/images/google1.png"
-                    alt="Google logo"
-                    className="social-icon"
-                  />
+                  <img src="src/images/google1.png" alt="Google logo" className="social-icon" />
                   Google
                 </button>
                 <button type="button" className="social-button facebook">
-                  <img
-                    src="src/images/facebook.png"
-                    alt="Facebook logo"
-                    className="social-icon"
-                  />
+                  <img src="src/images/facebook.png" alt="Facebook logo" className="social-icon" />
                   Facebook
                 </button>
               </div>
@@ -191,22 +162,14 @@ function LoginModal({ open, onClose, onLoginSuccess }) {
             {isSignup ? (
               <p>
                 Already have an account?{" "}
-                <button
-                  type="button"
-                  className="link-button"
-                  onClick={() => setIsSignup(false)}
-                >
+                <button type="button" className="link-button" onClick={() => setIsSignup(false)}>
                   Log in
                 </button>
               </p>
             ) : (
               <p>
                 Don’t have an account?{" "}
-                <button
-                  type="button"
-                  className="link-button"
-                  onClick={() => setIsSignup(true)}
-                >
+                <button type="button" className="link-button" onClick={() => setIsSignup(true)}>
                   Sign up
                 </button>
               </p>

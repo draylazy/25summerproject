@@ -68,46 +68,40 @@
   background: white;
 }
 
-/* DARK MODE: Contact Section Background */
+
 .dark-mode .contact-section {
-  background-color: #1f3557; /* dark background */
+  background-color: #1f3557; 
 }
 
-/* DARK MODE: Keep main container text light */
 .dark-mode .contact-container {
   color: #f1f5f9;
 }
 
-/* DARK MODE: Form background stays slightly dark transparent */
 .dark-mode .contact-form {
   background: rgba(30, 41, 59, 0.6);
 }
 
-/* DARK MODE: Label text */
+
 .dark-mode .contact-form label {
   color: #f1f5f9;
 }
 
-/* DARK MODE: Input and textarea fields */
 .dark-mode .contact-form input,
 .dark-mode .contact-form textarea {
   background: #334155;
   color: #f1f5f9;
 }
 
-/* DARK MODE: Focus outline */
 .dark-mode .contact-form input:focus,
 .dark-mode .contact-form textarea:focus {
   outline: 2px solid #f1f5f9;
 }
 
-/* DARK MODE: Submit button */
 .dark-mode .contact-form button {
   background: #3b82f6;
   color: #f1f5f9;
 }
 
-/* DARK MODE: Submit button hover */
 .dark-mode .contact-form button:hover {
   background: #60a5fa;
   color: #1e293b;

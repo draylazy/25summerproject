@@ -13,41 +13,55 @@ function AboutUs() {
       </Helmet>
     <div className="aboutus-container">
  
-      
-        <section className="motto-section">
+       <section className="motto-section">
           <h1>Alagang Biyahero — Travel Smarter, Ride Better.</h1>
         </section>
 
         <section className="objectives-section">
-          <h2>Our Objectives</h2>
-          <div className="objectives-grid">
-            <div className="objective">
-              Digitize Terminal Bookings
-              <div className="tooltip">
-                Streamline the ticketing and reservation process by offering a fast, user-friendly online booking system accessible via web or mobile.
-              </div>
-            </div>
-            <div className="objective">
-              Enhance Travel Convenience
-              <div className="tooltip">
-                Provide real-time schedules, trip management, and support features to reduce wait times and increase traveler confidence.
-              </div>
-            </div>
-            <div className="objective">
-              Empower Commuters & Admins
-              <div className="tooltip">
-                Offer tools for both passengers and terminal staff/admins to manage bookings, monitor trips, and ensure smooth operations.
-              </div>
-            </div>
-            <div className="objective">
-              Promote Safe & Smart Travel
-              <div className="tooltip">
-                Encourage digital adoption in public transport while integrating safety, reliability, and alaga into every step of the journey.
-              </div>
-            </div>
-          </div>
+  <h2>Our Objectives</h2>
+  <div className="objectives-grid">
+    <div className="objective">
+      <div className="image-container">
+        <img src="src/images/booking.png" alt="Digitize Terminal Bookings" />
+        <div className="tooltip">
+          Streamline the ticketing and reservation process by offering a fast, user-friendly online booking system accessible via web or mobile.
+        </div>
+      </div>
+      <p className="objective-title">Digitize Terminal Bookings</p>
+    </div>
 
-        </section>
+    <div className="objective">
+      <div className="image-container">
+        <img src="src/images/travel.png" alt="Enhance Travel Convenience" />
+        <div className="tooltip">
+          Provide real-time schedules, trip management, and support features to reduce wait times and increase traveler confidence.
+        </div>
+      </div>
+      <p className="objective-title">Enhance Travel Convenience</p>
+    </div>
+
+    <div className="objective">
+      <div className="image-container">
+        <img src="src/images/admin.png" alt="Empower Commuters & Admins" />
+        <div className="tooltip">
+          Offer tools for both passengers and terminal staff/admins to manage bookings, monitor trips, and ensure smooth operations.
+        </div>
+      </div>
+      <p className="objective-title">Empower Commuters & Admins</p>
+    </div>
+
+    <div className="objective">
+      <div className="image-container">
+        <img src="src/images/safe.png" alt="Promote Safe & Smart Travel" />
+        <div className="tooltip">
+          Encourage digital adoption in public transport while integrating safety, reliability, and alaga into every step of the journey.
+        </div>
+      </div>
+      <p className="objective-title">Promote Safe & Smart Travel</p>
+    </div>
+  </div>
+</section>
+
  
       <section className="testimonials-section" id="team">
         <div className="testimonials-container">
@@ -59,7 +73,7 @@ function AboutUs() {
               <p>Founder & Developer</p>
             </div>
             <div className="testimonial">
-              <img src="src/images/jhon.jpg" alt="Jhon Zydney Belia" />
+              <img src="src/images/zydney.jpg" alt="Jhon Zydney Belia" />
               <h4>Jhon Zydney Belia</h4>
               <p>Founder & Developer</p>
             </div>

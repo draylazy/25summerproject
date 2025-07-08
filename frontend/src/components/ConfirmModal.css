@@ -21,7 +21,7 @@
   color: #222;
 }
 
-/* Dark Mode */
+
 .dark-mode .confirm-modal-content {
   background: #1e293b;
   color: #f1f5f9;
@@ -55,9 +55,9 @@
   color: #f1f5f9;
 }
 
-/* Dark mode buttons */
+
 .dark-mode .confirm-modal-buttons .confirm {
-  background: #ef4444; /* slightly brighter red for dark mode */
+  background: #ef4444; 
   color: #f9fafb;
 }
 

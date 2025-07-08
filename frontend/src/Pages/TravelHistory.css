@@ -67,27 +67,27 @@ tr:hover {
 
 
 .dark-mode .travel-history-container {
-  background-color: #1e293b; /* dark gray background */
+  background-color: #1e293b; 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .dark-mode .travel-history-container h2 {
-  color: #f3f4f6; /* light text */
+  color: #f3f4f6; 
 }
 
 .dark-mode table {
-  background-color: transparent; /* keep transparent so container shows */
+  background-color: transparent; 
 }
 
 .dark-mode th {
-  background-color: #374151; /* darker header background */
-  color: #f3f4f6; /* light header text */
+  background-color: #374151; 
+  color: #f3f4f6; 
 }
 
 .dark-mode td {
-  color: #e5e7eb; /* light cell text */
+  color: #e5e7eb; 
 }
 
 .dark-mode tr:hover {
-  background-color: #374151; /* hover effect in dark */
+  background-color: #374151; 
 }

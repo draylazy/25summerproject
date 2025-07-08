@@ -116,7 +116,6 @@ function ManageBookings() {
             </tbody>
           </table>
 
-          {/* 🟢 NEW: Pagination controls */}
           <div className="pagination">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -140,7 +139,6 @@ function ManageBookings() {
               <div className="edit-modal">
                 <h3>Edit Booking</h3>
                 <form onSubmit={handleEditSubmit}>
-                  {/* [ ... the edit form as before ... ] */}
                   <label>
                     Booking ID:
                     <input type="text" value={editingBooking.id} readOnly />

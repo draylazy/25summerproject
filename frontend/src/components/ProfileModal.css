@@ -1,25 +1,153 @@
-.profile-details p {
-  margin: 0.5rem 0;
-  font-size: 1rem;
+/* ======================
+   MODAL BASE STYLES
+====================== */
+.modal-content {
+  max-width: 450px;
+  width: 100%;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+  text-align: left;
+  animation: fadeInUp 0.35s ease-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.profile-actions {
-  margin-top: 1.5rem;
+.modal-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.25rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.dark-mode .modal-content 
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.25rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+
+.profile-picture {
+  display: block;
+  margin: 1rem auto 1.5rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: 3px solid transparent;
+  background-color: transparent;
+  transition: box-shadow 0.3s ease, border 0.3s ease;
+  filter: none;
+}
+
+
+.dark-mode .profile-picture {
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.08);
+  border: 3px solid #475569;
+  background-color: transparent;
+  filter: none;
+}
+
+
+.profile-details {
+  margin-top: 1rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 1rem;
+  animation: fadeInUp 0.3s ease-in-out;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-details.editing,
+.profile-details.viewing {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.profile-details p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.profile-details input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  margin-top: 0.25rem;
+  background-color: #f9fafb;
+}
+
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.input-group input {
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.input-group input:disabled {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+
+.profile-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .edit-btn,
 .change-pass-btn {
-  flex: 1;
-  padding: 0.6rem 1rem;
-  font-weight: 600;
-  font-size: 1rem;
+  padding: 0.65rem 1.2rem;
   border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
+  flex: 1;
+  min-width: 140px;
 }
 
 .edit-btn {
@@ -40,7 +168,67 @@
   background-color: #059669;
 }
 
-/* Dark Mode Support */
+
+.local-alert {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1.25rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  animation: fadeInScale 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.dark-mode .modal-content {
+  background-color: #1e293b;
+}
+
+.dark-mode .modal-content h3 {
+  color: #f1f5f9;
+}
+
+.dark-mode .input-group label {
+  color: #f1f5f9;
+}
+
+.dark-mode .input-group input {
+  background-color: #334155;
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+.dark-mode .input-group input:disabled {
+  background-color: #1e293b;
+  color: #9ca3af;
+}
+
 .dark-mode .edit-btn {
   background-color: #60a5fa;
   color: #1e293b;
@@ -57,4 +245,121 @@
 
 .dark-mode .change-pass-btn:hover {
   background-color: #10b981;
+}
+
+.dark-mode .local-alert {
+  background-color: #064e3b;
+  color: #bbf7d0;
+  border-color: #10b981;
+}
+
+.payment-method-buttons button.active {
+  border: 2px solid #3b82f6;
+  background-color: #e0f2fe;
+}
+
+.payment-method-buttons button img {
+  width: 50px;
+  height: auto;
+  transition: filter 0.3s ease;
+}
+
+.dark-mode .payment-method-buttons button.active img {
+  filter: brightness(1.2); 
+}
+
+
+.payment-method-buttons button.active {
+  border: 2px solid #3b82f6;
+  background-color: #e0f2fe;
+}
+
+.payment-method-buttons button {
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .payment-method-buttons button.active {
+  border: 2px solid #3b82f6;
+  background-color: #e0f2fe;
+}
+
+.summary-box {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-box h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.summary-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-box li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.total-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle-breakdown {
+  background-color: transparent;
+  border: none;
+  color: #2563eb;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.price-breakdown {
+  margin-top: 1rem;
+  background: #f3f4f6;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.dark-mode .summary-box {
+  background-color: #1e293b;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.dark-mode .summary-box h2,
+.dark-mode .summary-box li,
+.dark-mode .total-price {
+  color: #f1f5f9;
+}
+
+.dark-mode .price-breakdown {
+  background: #334155;
+  color: #e2e8f0;
 }

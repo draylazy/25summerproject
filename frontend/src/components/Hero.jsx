@@ -14,13 +14,12 @@ function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
 
-  // Auto-slide
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
     }, 5000);
     return () => clearInterval(interval);
-  }, [currentIndex]); // include currentIndex so it restarts timer on change
+  }, [currentIndex]); 
 
   const handlePrev = () => {
     setIsFading(true);
@@ -29,7 +28,7 @@ function Hero() {
         prev === 0 ? images.length - 1 : prev - 1
       );
       setIsFading(false);
-    }, 300); // matches fade duration
+    }, 300); 
   };
 
   const handleNext = () => {

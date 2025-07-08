@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './PaymentPage.css';
@@ -8,12 +8,13 @@ function PaymentPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const data = location.state || {};
+  const breakdownRef = useRef(null);
 
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [showBreakdown, setShowBreakdown] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [nextBookingId, setNextBookingId] = useState(null);
-  const [cardNumber, setCardNumber] = useState(''); // NEW
+  const [cardNumber, setCardNumber] = useState('');
 
   useEffect(() => {
     const fetchLastBookingId = async () => {
@@ -49,7 +50,6 @@ function PaymentPage() {
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const bookingResponse = await axios.post('http://localhost:8080/api/bookings/create', {
         terminal: data.from,
@@ -86,78 +86,26 @@ function PaymentPage() {
         <title>Biyahero | Payment</title>
       </Helmet>
 
-      <div className="payment-box">
-        <div className="summary-box">
-          <h2>Booking Summary</h2>
-          <ul>
-            <li><strong>Booking Id:</strong> {nextBookingId !== null ? nextBookingId : 'Loading...'}</li>
-            <li><strong>From:</strong> {data.from}</li>
-            <li><strong>To:</strong> {data.to}</li>
-            <li><strong>Date:</strong> {data.date}</li>
-            <li><strong>Bus Type:</strong> {data.busType}</li>
-            <li><strong>Passengers:</strong> {data.passengers}</li>
-          </ul>
-
-          <div className="total-price">
-            Total: ₱{totalPrice}
-            <button
-              className="toggle-breakdown"
-              onClick={() => setShowBreakdown(!showBreakdown)}
-            >
-              {showBreakdown ? 'Hide' : 'Show'} Breakdown
-            </button>
-          </div>
-
-          {showBreakdown && (
-            <div className="price-breakdown">
-              {data.busType === 'Aircon' ? (
-                <>
-                  <p>Base fare per passenger: ₱{data.pricePerPassenger - 50}</p>
-                  <p>Aircon surcharge per passenger: ₱50</p>
-                  <p>Passengers: {data.passengers}</p>
-                  <hr />
-                  <p>Total per passenger: ₱{data.pricePerPassenger}</p>
-                  <strong>Grand Total: ₱{totalPrice}</strong>
-                </>
-              ) : (
-                <>
-                  <p>Base fare per passenger: ₱{data.pricePerPassenger}</p>
-                  <p>Passengers: {data.passengers}</p>
-                  <hr />
-                  <strong>Total: ₱{totalPrice}</strong>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-
+      <div className="payment-box swapped-layout">
         <div className="payment-container">
           <h2>Payment Details</h2>
-          <p>Choose Payment Method:</p>
-          <div className="payment-method-buttons">
-            <button
-              type="button"
-              className={paymentMethod === 'card' ? 'active' : ''}
-              onClick={() => setPaymentMethod('card')}
-            >
+          <div className="payment-method-group">
+            <p className="choose-payment-label">Choose Payment Method</p>
+            <div className="payment-method-buttons">
+            <button type="button" className={paymentMethod === 'card' ? 'active' : ''} onClick={() => setPaymentMethod('card')}>
               <img src="src/images/card1.png" alt="Card" />
             </button>
-            <button
-              type="button"
-              className={paymentMethod === 'gcash' ? 'active' : ''}
-              onClick={() => setPaymentMethod('gcash')}
-            >
+            <button type="button" className={paymentMethod === 'gcash' ? 'active' : ''} onClick={() => setPaymentMethod('gcash')}>
               <img src="src/images/gcash.png" alt="GCash" />
             </button>
-            <button
-              type="button"
-              className={paymentMethod === 'maya' ? 'active' : ''}
-              onClick={() => setPaymentMethod('maya')}
-            >
+            <button type="button" className={paymentMethod === 'maya' ? 'active' : ''} onClick={() => setPaymentMethod('maya')}>
               <img src="src/images/maya.png" alt="Maya" />
             </button>
           </div>
 
+          </div>
+        
+          
           <form className="payment-form" onSubmit={handlePaymentSubmit}>
             {paymentMethod === 'card' && (
               <>
@@ -192,14 +140,7 @@ function PaymentPage() {
               <>
                 <div>
                   <label>{paymentMethod.toUpperCase()} Account Number</label>
-                  <input
-                    type="tel"
-                    pattern="09[0-9]{9}"
-                    maxLength="11"
-                    placeholder="09XXXXXXXXX"
-                    required
-                    title="Enter a valid 11-digit number starting with 09"
-                  />
+                  <input type="tel" pattern="09[0-9]{9}" maxLength="11" placeholder="09XXXXXXXXX" required />
                 </div>
                 <div>
                   <label>Account Holder Name</label>
@@ -207,9 +148,78 @@ function PaymentPage() {
                 </div>
               </>
             )}
-
             <button type="submit">Pay Now</button>
           </form>
+        </div>
+
+        <div className="summary-box">
+          <h2>Booking Summary</h2>
+          <ul>
+            <li><span className="summary-label">Booking ID:</span> <span className="summary-value">{nextBookingId || 'Loading...'}</span></li>
+            <li><span className="summary-label">From:</span> <span className="summary-value">{data.from}</span></li>
+            <li><span className="summary-label">To:</span> <span className="summary-value">{data.to}</span></li>
+            <li><span className="summary-label">Date:</span> <span className="summary-value">{data.date}</span></li>
+            <li><span className="summary-label">Bus Type:</span> <span className="summary-value">{data.busType}</span></li>
+            <li><span className="summary-label">Passengers:</span> <span className="summary-value">{data.passengers}</span></li>
+          </ul>
+
+          <div className="total-price">
+            Total: ₱{totalPrice}
+            <button className="toggle-breakdown" onClick={() => setShowBreakdown(!showBreakdown)}>
+              {showBreakdown ? 'Hide' : 'Show'} Breakdown
+            </button>
+          </div>
+
+          <div
+            ref={breakdownRef}
+            className={`price-breakdown-wrapper ${showBreakdown ? 'expanded' : ''}`}
+            style={{
+              maxHeight: showBreakdown ? `${breakdownRef.current?.scrollHeight}px` : '0px',
+              opacity: showBreakdown ? 1 : 0,
+            }}
+          >
+            {data.busType === 'Aircon' ? (
+              <>
+                <div className="summary-item">
+                  <span className="summary-label">Base Fare</span>
+                  <strong className="summary-value">₱{data.pricePerPassenger - 50}</strong>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Aircon Surcharge</span>
+                  <strong className="summary-value">₱50</strong>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Passengers</span>
+                  <strong className="summary-value">{data.passengers}</strong>
+                </div>
+                <hr />
+                <div className="summary-item">
+                  <span className="summary-label">Total / Passenger</span>
+                  <strong className="summary-value">₱{data.pricePerPassenger}</strong>
+                </div>
+                <div className="summary-item">
+                  <strong className="summary-label" style={{ opacity: 1 }}>Grand Total</strong>
+                  <strong className="summary-value total">₱{totalPrice}</strong>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="summary-item">
+                  <span className="summary-label">Base Fare</span>
+                  <strong className="summary-value">₱{data.pricePerPassenger}</strong>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Passengers</span>
+                  <strong className="summary-value">{data.passengers}</strong>
+                </div>
+                <hr />
+                <div className="summary-item">
+                  <strong className="summary-label" style={{ opacity: 1 }}>Grand Total</strong>
+                  <strong className="summary-value total">₱{totalPrice}</strong>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

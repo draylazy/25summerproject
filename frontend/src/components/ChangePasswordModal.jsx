@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./ProfileModal.css";
+import "./ChangePasswordModal.css";
 
 function ChangePasswordModal({ open, username, onClose }) {
   const [newPassword, setNewPassword] = useState("");
@@ -53,7 +53,7 @@ function ChangePasswordModal({ open, username, onClose }) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="changePassModal-content">
         <button className="close-button" onClick={handleClose}>
           &times;
         </button>
